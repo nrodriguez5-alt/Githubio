@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nick Rod</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background: #fafafa;
+    }
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 32px 18px;
+    }
+    h1 {
+      margin-bottom: 6px;
+    }
+    .sub {
+      color: #555;
+      margin-top: 0;
+    }
+    section {
+      margin-top: 28px;
+      padding-top: 14px;
+      border-top: 1px solid #ddd;
+    }
+    #toggleHeading {
+      cursor: pointer;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Nick Rod</h1>
+    <p class="sub">Cuban American independent artist · rapper · producer · songwriter</p>
+
+    <section>
+      <h2>Short Bio</h2>
+      <p>
+        I’m a Cuban American independent artist and music student focused on building a sustainable career outside traditional industry paths.
+        My work blends rap and melodic songwriting, and I’m interested in how technology and direct fan relationships can support long-term creative independence.
+      </p>
+    </section>
+
+    <section>
+      <h2>What I’m Working On</h2>
+      <p>
+        Right now I’m focused on releasing music consistently, improving my production and writing, and learning how to build repeatable systems around my art.
+      </p>
+    </section>
+
+    <section>
+      <h2 id="toggleHeading">What I Care About Right Now</h2>
+      <p id="toggleText" style="display:none;">
+        I’m curious about how artists can use emerging technology to stay independent without burning out or chasing hype.
+        I care about ownership, real fan connection, and building things that last instead of optimizing for short-term attention.
+        If you’re interested in where music, culture, and new tools overlap in a more thoughtful way, that’s what I’m exploring.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const heading = document.getElementById("toggleHeading");
+    const text = document.getElementById("toggleText");
+
+    heading.addEventListener("click", () => {
+      text.style.display = text.style.display === "none" ? "block" : "none";
+    });
+  </script>
+</body>
+</html>
