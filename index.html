@@ -4,74 +4,476 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Nick Rod</title>
+  <meta name="description" content="Nick Rod. Cuban American independent artist, rapper, producer, songwriter. Building music with purpose and direct fan connection." />
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
+    :root{
+      --bg: #0b0c10;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.66);
+      --line: rgba(255,255,255,.14);
+      --accent: #7c3aed;
+      --accent2: #22c55e;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+      --max: 1040px;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
       margin: 0;
-      padding: 0;
-      background: #fafafa;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: var(--text);
+      line-height: 1.6;
+      background:
+        radial-gradient(1200px 700px at 10% 0%, rgba(124,58,237,.35), transparent 55%),
+        radial-gradient(900px 700px at 85% 15%, rgba(34,197,94,.18), transparent 58%),
+        radial-gradient(900px 650px at 50% 110%, rgba(59,130,246,.16), transparent 55%),
+        var(--bg);
     }
-    main {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 32px 18px;
+
+    a{ color: inherit; text-decoration: none; }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 28px 18px 64px; }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 16px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.22);
+      backdrop-filter: blur(12px);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 16px;
+      z-index: 20;
     }
-    h1 {
-      margin-bottom: 6px;
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      font-weight: 700;
+      letter-spacing: .2px;
+      white-space: nowrap;
     }
-    .sub {
-      color: #555;
-      margin-top: 0;
+
+    .dot{
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), #60a5fa);
+      box-shadow: 0 0 0 4px rgba(124,58,237,.14);
     }
-    section {
-      margin-top: 28px;
-      padding-top: 14px;
-      border-top: 1px solid #ddd;
+
+    .navlinks{
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
-    #toggleHeading {
+
+    .navlinks a{
+      font-size: 14px;
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 999px;
+    }
+
+    .navlinks a:hover{
+      background: rgba(255,255,255,.07);
+      color: var(--text);
+    }
+
+    @media (max-width: 860px){
+      .navlinks{ display:none; }
+    }
+
+    .hero{
+      margin-top: 22px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.03));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 34px 18px 18px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(700px 260px at 15% 10%, rgba(124,58,237,.22), transparent 60%);
+      pointer-events:none;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 18px;
+      position: relative;
+    }
+
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.16);
+    }
+
+    .kicker span{
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent2);
+      box-shadow: 0 0 0 4px rgba(34,197,94,.12);
+    }
+
+    h1{
+      margin: 12px 0 10px;
+      font-size: clamp(34px, 4.2vw, 56px);
+      line-height: 1.05;
+      letter-spacing: -0.8px;
+    }
+
+    .sub{
+      margin: 0 0 16px;
+      color: var(--muted);
+      max-width: 64ch;
+      font-size: 16px;
+    }
+
+    .ctaRow{
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-weight: 650;
+      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+      transition: transform .08s ease, background .2s ease, filter .2s ease;
+    }
+
+    .btn:hover{ background: rgba(255,255,255,.10); }
+    .btn:active{ transform: translateY(1px); }
+
+    .btn.primary{
+      border-color: rgba(124,58,237,.55);
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(59,130,246,.85));
+    }
+
+    .btn.primary:hover{ filter: brightness(1.06); }
+
+    .sideCard{
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(0,0,0,.18);
+      padding: 16px;
+    }
+
+    .sideCard h3{
+      margin: 0 0 10px;
+      font-size: 15px;
+      color: rgba(255,255,255,.86);
+    }
+
+    .pill{
+      display:flex;
+      align-items:flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+      margin-top: 10px;
+    }
+
+    .icon{
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      display:grid;
+      place-items:center;
+      background: rgba(124,58,237,.18);
+      border: 1px solid rgba(124,58,237,.28);
+      flex: 0 0 auto;
+    }
+
+    .pill b{ font-size: 13px; }
+    .pill p{ margin: 2px 0 0; font-size: 13px; color: var(--muted); }
+
+    .section{
+      margin-top: 16px;
+      padding: 20px 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--radius);
+      box-shadow: 0 14px 38px rgba(0,0,0,.28);
+    }
+
+    .section h2{
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: -0.2px;
+    }
+
+    .section p{
+      margin: 0 0 10px;
+      color: var(--muted);
+    }
+
+    .twoCol{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 860px){
+      .twoCol{ grid-template-columns: 1fr; }
+    }
+
+    ul{
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+    li{ margin: 8px 0; }
+
+    .toggleHeading{
       cursor: pointer;
       user-select: none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+    }
+
+    .chev{
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display:grid;
+      place-items:center;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.82);
+      flex: 0 0 auto;
+    }
+
+    .footer{
+      margin-top: 18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      color: rgba(255,255,255,.55);
+      font-size: 13px;
+      padding: 0 6px;
+    }
+
+    .footer a{ color: rgba(255,255,255,.72); }
+    .footer a:hover{ color: var(--text); }
+
+    .divider{
+      height: 1px;
+      background: rgba(255,255,255,.10);
+      margin: 14px 0;
     }
   </style>
 </head>
-<body>
-  <main>
-    <h1>Nick Rod</h1>
-    <p class="sub">Cuban American independent artist · rapper · producer · songwriter</p>
 
-    <section>
+<body>
+  <div class="wrap">
+
+    <div class="nav">
+      <div class="brand">
+        <div class="dot"></div>
+        <div>Nick Rod</div>
+      </div>
+      <div class="navlinks">
+        <a href="#bio">Bio</a>
+        <a href="#purpose">Purpose</a>
+        <a href="#building">What I’m Building</a>
+        <a href="#proof">Proof</a>
+        <a href="#care">What I Care About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div class="grid">
+        <div>
+          <div class="kicker"><span></span> Cuban American independent artist, rapper, producer, songwriter</div>
+
+          <h1>Music with purpose.<br/>Built independent.</h1>
+
+          <p class="sub">
+            I’m building a sustainable career outside traditional industry paths.
+            I write and produce my own work, release consistently, and I’m focused on direct fan connection that lasts.
+          </p>
+
+          <div class="ctaRow" id="contact">
+            <a class="btn primary" href="#building">What I’m building →</a>
+            <a class="btn" href="mailto:YOUR_EMAIL_HERE">Contact me</a>
+            <a class="btn" href="YOUR_SPOTIFY_LINK_HERE" target="_blank" rel="noreferrer">Listen</a>
+          </div>
+        </div>
+
+        <aside class="sideCard">
+          <h3>Right now</h3>
+
+          <div class="pill">
+            <div class="icon">🎛️</div>
+            <div>
+              <b>Releasing consistently</b>
+              <p>Writing, producing, and shipping like this is my real business.</p>
+            </div>
+          </div>
+
+          <div class="pill">
+            <div class="icon">📈</div>
+            <div>
+              <b>Testing growth</b>
+              <p>Ads, content, and systems that turn listeners into real supporters.</p>
+            </div>
+          </div>
+
+          <div class="pill">
+            <div class="icon">🤝</div>
+            <div>
+              <b>Building community</b>
+              <p>Direct relationship first, platforms second.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <section class="section" id="bio">
       <h2>Short Bio</h2>
       <p>
         I’m a Cuban American independent artist and music student focused on building a sustainable career outside traditional industry paths.
-        My work blends rap and melodic songwriting, and I’m interested in how technology and direct fan relationships can support long-term creative independence.
+        My work blends rap and melodic songwriting, and I’m interested in how technology and direct fan relationships can support long term creative independence.
       </p>
     </section>
 
-    <section>
+    <section class="section" id="purpose">
+      <h2>Purpose</h2>
+      <p>
+        I want my music to help people lock in on their direction and move with purpose.
+        Not just background sound.
+        Something you can actually live with and come back to.
+      </p>
+    </section>
+
+    <section class="section" id="building">
+      <h2>What I’m Building</h2>
+      <p><b>What it is:</b> An independent music ecosystem around my releases, visuals, and community.</p>
+      <p><b>Who it’s for:</b> People who want to support artists directly and be part of the process, not just stream.</p>
+      <p><b>What problem it solves:</b> Artists get stuck chasing algorithms to survive. I’m building direct connection so the career is sustainable.</p>
+
+      <div class="divider"></div>
+
+      <div class="ctaRow">
+        <a class="btn primary" href="mailto:YOUR_EMAIL_HERE">Contact me</a>
+        <a class="btn" href="YOUR_INSTAGRAM_LINK_HERE" target="_blank" rel="noreferrer">Instagram</a>
+        <a class="btn" href="YOUR_TIKTOK_LINK_HERE" target="_blank" rel="noreferrer">TikTok</a>
+      </div>
+    </section>
+
+    <section class="section" id="proof">
+      <h2>Proof</h2>
+      <p>Quick receipts so this is not just words.</p>
+
+      <div class="twoCol">
+        <div class="sideCard">
+          <h3>Real output</h3>
+          <ul>
+            <li>I write and produce my own songs and I actually release them.</li>
+            <li>I run promo tests and track results so I learn what converts, not what sounds cool.</li>
+            <li>I build consistent visuals so the music feels like a real world, not random posts.</li>
+          </ul>
+        </div>
+
+        <div class="sideCard">
+          <h3>How I work</h3>
+          <ul>
+            <li>I start with a clear emotion and purpose before anything technical.</li>
+            <li>I keep a tight workflow so I can ship without overthinking.</li>
+            <li>I care more about repeat listeners and real supporters than vanity numbers.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="working">
       <h2>What I’m Working On</h2>
       <p>
-        Right now I’m focused on releasing music consistently, improving my production and writing, and learning how to build repeatable systems around my art.
+        Right now I’m focused on releasing music consistently, improving my production and writing,
+        and learning how to build repeatable systems around my art.
       </p>
     </section>
 
-    <section>
-      <h2 id="toggleHeading">What I Care About Right Now</h2>
-      <p id="toggleText" style="display:none;">
+    <section class="section" id="care">
+      <div class="toggleHeading" id="toggleHeading" role="button" aria-expanded="false">
+        <h2 style="margin:0;">What I Care About Right Now</h2>
+        <div class="chev" aria-hidden="true" id="chev">+</div>
+      </div>
+
+      <p id="toggleText" style="display:none; margin-top: 12px;">
         I’m curious about how artists can use emerging technology to stay independent without burning out or chasing hype.
-        I care about ownership, real fan connection, and building things that last instead of optimizing for short-term attention.
+        I care about ownership, real fan connection, and building things that last instead of optimizing for short term attention.
         If you’re interested in where music, culture, and new tools overlap in a more thoughtful way, that’s what I’m exploring.
       </p>
     </section>
-  </main>
+
+    <div class="footer">
+      <div>© <span id="year"></span> Nick Rod</div>
+      <div><a href="#bio">Back to top</a></div>
+    </div>
+
+  </div>
 
   <script>
     const heading = document.getElementById("toggleHeading");
     const text = document.getElementById("toggleText");
+    const chev = document.getElementById("chev");
 
     heading.addEventListener("click", () => {
-      text.style.display = text.style.display === "none" ? "block" : "none";
+      const isHidden = (text.style.display === "none");
+      text.style.display = isHidden ? "block" : "none";
+      heading.setAttribute("aria-expanded", isHidden ? "true" : "false");
+      chev.textContent = isHidden ? "–" : "+";
     });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
