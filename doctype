@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nick Rod</title>
+  <meta name="description" content="Independent artist, producer, and creative entrepreneur. Building direct-to-fan music experiences." />
+  <style>
+    :root{
+      --bg: #0b0c10;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --line: rgba(255,255,255,.14);
+      --accent: #7c3aed;
+      --accent2: #22c55e;
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+      --radius: 18px;
+      --max: 1040px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 15% 10%, rgba(124,58,237,.35), transparent 55%),
+        radial-gradient(900px 600px at 80% 20%, rgba(34,197,94,.18), transparent 60%),
+        radial-gradient(900px 700px at 50% 110%, rgba(59,130,246,.18), transparent 55%),
+        var(--bg);
+      line-height:1.55;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 28px 18px 60px; }
+
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.25);
+      backdrop-filter: blur(12px);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+    }
+    .brand{ display:flex; gap:12px; align-items:center; }
+    .dot{
+      width:11px; height:11px; border-radius:999px;
+      background: linear-gradient(135deg, var(--accent), #60a5fa);
+      box-shadow: 0 0 0 4px rgba(124,58,237,.15);
+    }
+    .brand b{ font-weight:700; letter-spacing:.2px; }
+    .navlinks{ display:flex; gap:14px; align-items:center; }
+    .navlinks a{
+      font-size:14px; color: var(--muted);
+      padding: 8px 10px; border-radius: 999px;
+    }
+    .navlinks a:hover{ background: rgba(255,255,255,.06); color: var(--text); }
+
+    .hero{
+      margin-top: 26px;
+      padding: 44px 18px 18px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero::after{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(600px 220px at 15% 10%, rgba(124,58,237,.24), transparent 60%);
+      pointer-events:none;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 22px;
+      position:relative;
+    }
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
+      .navlinks{ display:none; }
+    }
+
+    .kicker{
+      display:inline-flex; gap:8px; align-items:center;
+      font-size:13px; color: var(--muted);
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(0,0,0,.18);
+    }
+    .kicker span{
+      width:7px; height:7px; border-radius:999px;
+      background: var(--accent2);
+      box-shadow: 0 0 0 4px rgba(34,197,94,.12);
+    }
+
+    h1{
+      margin: 14px 0 10px;
+      font-size: clamp(34px, 4vw, 54px);
+      line-height: 1.05;
+      letter-spacing: -0.8px;
+    }
+    .sub{
+      margin: 0 0 18px;
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 60ch;
+    }
+
+    .ctaRow{ display:flex; gap:12px; flex-wrap:wrap; margin-top: 18px; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+      transition: transform .08s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn:hover{ background: rgba(255,255,255,.10); }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{
+      border-color: rgba(124,58,237,.55);
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(59,130,246,.85));
+    }
+    .btn.primary:hover{ filter: brightness(1.05); }
+    .btn .arrow{ opacity:.9; }
+
+    .card{
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(0,0,0,.18);
+      padding: 16px;
+    }
+    .card h3{ margin: 0 0 10px; font-size: 15px; color: rgba(255,255,255,.86); }
+    .mini{
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .pill{
+      display:flex; align-items:flex-start; gap:10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .pill b{ font-size: 13px; }
+    .pill p{ margin:2px 0 0; font-size: 13px; color: var(--muted); }
+    .icon{
+      width:28px; height:28px; border-radius: 10px;
+      display:grid; place-items:center;
+      background: rgba(124,58,237,.18);
+      border: 1px solid rgba(124,58,237,.28);
+      flex: 0 0 auto;
+    }
+
+    .section{
+      margin-top: 18px;
+      padding: 22px 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--radius);
+      box-shadow: 0 14px 38px rgba(0,0,0,.28);
+    }
+    .section h2{
+      margin:0 0 10px;
+      font-size: 18px;
+      letter-spacing: -0.2px;
+    }
+    .section p{ margin: 0 0 10px; color: var(--muted); }
+
+    .cols{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (max-width: 860px){
+      .cols{ grid-template-columns: 1fr; }
+    }
+
+    .bullet{
+      margin: 0; padding-left: 18px; color: var(--muted);
+    }
+    .bullet li{ margin: 8px 0; }
+
+    .footer{
+      margin-top: 18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      color: rgba(255,255,255,.55);
+      font-size: 13px;
+      padding: 0 6px;
+    }
+    .footer a{ color: rgba(255,255,255,.72); }
+    .footer a:hover{ color: var(--text); }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div class="nav">
+      <div class="brand">
+        <div class="dot"></div>
+        <b>Nick Rod</b>
+      </div>
+      <div class="navlinks">
+        <a href="#purpose">Purpose</a>
+        <a href="#building">What I’m Building</a>
+        <a href="#proof">Proof</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div class="grid">
+        <div>
+          <div class="kicker"><span></span> independent artist and producer</div>
+          <h1>Music with purpose, built in public.</h1>
+          <p class="sub">
+            I’m building an independent music career that does not depend on algorithms.
+            The goal is simple: make work that matters and build a real connection with the people who care.
+          </p>
+
+          <div class="ctaRow">
+            <a class="btn primary" href="#building">
+              What I’m building <span class="arrow">→</span>
+            </a>
+            <a class="btn" href="mailto:YOUR_EMAIL_HERE">
+              Contact me
+            </a>
+            <a class="btn" href="YOUR_SPOTIFY_LINK_HERE" target="_blank" rel="noreferrer">
+              Listen
+            </a>
+          </div>
+        </div>
+
+        <aside class="card">
+          <h3>Right now</h3>
+          <div class="mini">
+            <div class="pill">
+              <div class="icon">🎛️</div>
+              <div>
+                <b>Releasing consistently</b>
+                <p>Writing, producing, and shipping music like a real business.</p>
+              </div>
+            </div>
+            <div class="pill">
+              <div class="icon">📈</div>
+              <div>
+                <b>Testing growth</b>
+                <p>Ads, content, and funnels that turn listeners into supporters.</p>
+              </div>
+            </div>
+            <div class="pill">
+              <div class="icon">🤝</div>
+              <div>
+                <b>Building community</b>
+                <p>Direct relationship first, platforms second.</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <section id="purpose" class="section">
+      <h2>Purpose</h2>
+      <p>
+        I make music that helps people lock in on their direction. Not motivation quotes.
+        Real energy you can live with. I want the work to feel like it actually changes your week.
+      </p>
+    </section>
+
+    <section id="building" class="section">
+      <h2>What I’m Building</h2>
+      <p><b>What it is:</b> An independent music ecosystem around my releases, visuals, and community.</p>
+      <p><b>Who it’s for:</b> People who want to support artists directly and be part of the process, not just stream.</p>
+      <p><b>What problem it solves:</b> Artists get stuck chasing algorithms to survive. I’m building direct connection so the career is sustainable.</p>
+
+      <div class="ctaRow" id="contact" style="margin-top: 14px;">
+        <a class="btn primary" href="mailto:YOUR_EMAIL_HERE">Contact me</a>
+        <a class="btn" href="YOUR_INSTAGRAM_LINK_HERE" target="_blank" rel="noreferrer">Instagram</a>
+        <a class="btn" href="YOUR_TIKTOK_LINK_HERE" target="_blank" rel="noreferrer">TikTok</a>
+      </div>
+    </section>
+
+    <section id="proof" class="section">
+      <h2>Proof</h2>
+      <p>Quick receipts so this does not feel like empty words.</p>
+
+      <div class="cols">
+        <div class="card">
+          <h3>Real output</h3>
+          <ul class="bullet">
+            <li>I write and produce my own songs and actually release them, not just talk about it.</li>
+            <li>I run promo tests and track results so I can learn what converts, not what sounds cool.</li>
+            <li>I build my visuals and brand in a consistent style so the work looks like a real world.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>How I work</h3>
+          <ul class="bullet">
+            <li>I start with a clear emotion and purpose before anything technical.</li>
+            <li>I keep a tight release workflow so I can ship without overthinking.</li>
+            <li>I focus on direct fans and repeat listeners more than vanity metrics.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <div>© <span id="year"></span> Nick Rod</div>
+      <div>
+        <a href="#purpose">Top</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
