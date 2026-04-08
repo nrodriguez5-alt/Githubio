@@ -4,10 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>EarlySignal</title>
-  <meta
-    name="description"
-    content="EarlySignal is a fan ranking and rewards platform for artists. Support gets tracked, ranked, and rewarded over time."
-  />
+  <meta name="description" content="EarlySignal is a fan ranking and rewards platform for artists. Support gets tracked, ranked, and rewarded over time." />
 
   <style>
     :root{
@@ -21,6 +18,7 @@
       --accent2: #60a5fa;
       --good: #22c55e;
       --warn: #f59e0b;
+      --bad: #ef4444;
       --shadow: 0 18px 60px rgba(0,0,0,.42);
       --radius: 20px;
       --max: 1180px;
@@ -42,6 +40,7 @@
     }
 
     a{ color: inherit; text-decoration: none; }
+    img{ max-width: 100%; display: block; }
 
     .wrap{
       max-width: var(--max);
@@ -62,6 +61,9 @@
       box-shadow:var(--shadow);
       margin-bottom:28px;
       flex-wrap:wrap;
+      position: sticky;
+      top: 14px;
+      z-index: 30;
     }
 
     .brand{
@@ -85,23 +87,21 @@
 
     .hero{
       display:grid;
-      grid-template-columns:1.15fr .85fr;
+      grid-template-columns:1.1fr .9fr;
       gap:22px;
       align-items:stretch;
       margin-bottom:24px;
     }
 
-    .heroCard,
-    section{
+    .heroCard, section{
       border:1px solid var(--line);
       border-radius:var(--radius);
       background:var(--panel);
       box-shadow:var(--shadow);
     }
 
-    .heroCopy{
-      padding:28px;
-    }
+    .heroCopy{ padding:28px; }
+    .heroSide{ padding:22px; }
 
     .eyebrow{
       display:inline-block;
@@ -129,8 +129,7 @@
       margin:0;
     }
 
-    .heroActions,
-    .ctaRow{
+    .heroActions, .ctaRow{
       display:flex;
       gap:12px;
       flex-wrap:wrap;
@@ -145,6 +144,8 @@
       transition:.18s ease;
       border:1px solid transparent;
       cursor:pointer;
+      background: none;
+      color: inherit;
     }
 
     .btn.primary{
@@ -168,46 +169,15 @@
       background:rgba(255,255,255,.10);
     }
 
-    .heroPanel{
-      padding:24px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
+    .btn.ghost{
+      background: transparent;
+      border: 1px dashed var(--line);
+      color: var(--muted);
     }
 
-    .scoreCard{
-      padding:18px;
-      border-radius:18px;
-      border:1px solid var(--line);
-      background:var(--panel2);
-      margin-bottom:14px;
-    }
-
-    .muted{ color:var(--muted); }
-    .small{
-      font-size:13px;
-      color:var(--muted);
-    }
-
-    .leaderRow{
-      display:grid;
-      grid-template-columns:36px 1fr auto;
-      gap:12px;
-      align-items:center;
-      padding:10px 0;
-      border-bottom:1px solid rgba(255,255,255,.07);
-    }
-
-    .leaderRow:last-child{ border-bottom:0; }
-
-    .rank{
-      width:36px;
-      height:36px;
-      border-radius:999px;
-      display:grid;
-      place-items:center;
-      background:rgba(255,255,255,.07);
-      font-weight:800;
+    .btn.ghost:hover{
+      border-color: var(--accent2);
+      color: var(--text);
     }
 
     section{
@@ -230,6 +200,9 @@
       margin:0 0 12px;
     }
 
+    .muted{ color:var(--muted); }
+    .small{ font-size:13px; color:var(--muted); }
+
     .divider{
       height:1px;
       background:var(--line);
@@ -248,6 +221,12 @@
       gap:18px;
     }
 
+    .grid4{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:16px;
+    }
+
     .card{
       padding:18px;
       border-radius:18px;
@@ -255,173 +234,19 @@
       background:var(--panel2);
     }
 
-    ul{
-      margin:0;
-      padding-left:20px;
+    .card.clickable{
+      cursor: pointer;
+      transition: .18s ease;
     }
 
-    li{
-      margin:9px 0;
-      color:var(--muted);
+    .card.clickable:hover{
+      transform: translateY(-2px);
+      border-color: rgba(124,58,237,.45);
     }
 
-    .tierGrid{
-      display:grid;
-      grid-template-columns:repeat(4, 1fr);
-      gap:16px;
-      margin-top:16px;
-    }
-
-    .tier{
-      padding:18px;
-      border-radius:18px;
-      border:1px solid var(--line);
-      background:var(--panel2);
-    }
-
-    .tierLabel{
-      display:inline-block;
-      font-size:12px;
-      padding:5px 9px;
-      border-radius:999px;
-      margin-bottom:10px;
-      font-weight:800;
-      letter-spacing:.2px;
-    }
-
-    .bronze{ background: rgba(180, 83, 9, .22); color: #fcd34d; }
-    .silver{ background: rgba(148, 163, 184, .18); color: #e5e7eb; }
-    .gold{ background: rgba(245, 158, 11, .18); color: #fde68a; }
-    .platinum{ background: rgba(96, 165, 250, .18); color: #bfdbfe; }
-
-    .founder{
-      display:grid;
-      grid-template-columns:.9fr 1.1fr;
-      gap:20px;
-      align-items:center;
-    }
-
-    .founder img{
-      width:100%;
-      display:block;
-      border-radius:18px;
-      border:1px solid var(--line);
-      object-fit:cover;
-      max-height:680px;
-      background:#111;
-    }
-
-    .artistList{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:16px;
-      margin-top:16px;
-    }
-
-    .artistPill{
-      padding:16px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background:var(--panel2);
-    }
-
-    .artistPill strong{
-      display:block;
-      margin-bottom:6px;
-    }
-
-    .portalList{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:16px;
-      margin-top:16px;
-    }
-
-    .portalItem{
-      padding:18px;
-      border-radius:18px;
-      border:1px solid var(--line);
-      background:var(--panel2);
-    }
-
-    .portalItem h3{
-      font-size:18px;
-    }
-
-    .signupBox{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
-      align-items:start;
-    }
-
-    .formCard{
-      padding:20px;
-      border-radius:18px;
-      border:1px solid var(--line);
-      background:var(--panel2);
-    }
-
-    .formGrid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-    }
-
-    label{
-      display:block;
-      font-size:14px;
-      font-weight:700;
-      margin-bottom:6px;
-    }
-
-    input, select, textarea{
-      width:100%;
-      padding:12px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.04);
-      color:var(--text);
-      font:inherit;
-      outline:none;
-    }
-
-    input::placeholder,
-    textarea::placeholder{
-      color:rgba(255,255,255,.42);
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus{
-      border-color:rgba(124,58,237,.75);
-      box-shadow:0 0 0 3px rgba(124,58,237,.18);
-    }
-
-    textarea{
-      min-height:120px;
-      resize:vertical;
-    }
-
-    .full{
-      grid-column:1 / -1;
-    }
-
-    .submit{
-      width:100%;
-      padding:13px 18px;
-      border-radius:12px;
-      border:0;
-      background:var(--accent);
-      color:#fff;
-      font:inherit;
-      font-weight:800;
-      cursor:pointer;
-    }
-
-    .submit:hover{
-      opacity:.96;
-      transform:translateY(-1px);
+    .card.active{
+      border-color: rgba(96,165,250,.6);
+      background: rgba(96,165,250,.08);
     }
 
     .pill{
@@ -451,8 +276,193 @@
     .status.show{ display:block; }
     .status.good{ border-color: rgba(34,197,94,.35); color:#d1fae5; }
     .status.warn{ border-color: rgba(245,158,11,.35); color:#fde68a; }
+    .status.bad{ border-color: rgba(239,68,68,.35); color:#fecaca; }
 
     .hidden{ display:none !important; }
+
+    .founder{
+      display:grid;
+      grid-template-columns:.95fr 1.05fr;
+      gap:22px;
+      align-items:center;
+    }
+
+    .founder img{
+      width:100%;
+      border-radius:18px;
+      border:1px solid var(--line);
+      object-fit:cover;
+      background:#111;
+      max-height: 700px;
+    }
+
+    .splitChoice{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+      margin-top:18px;
+    }
+
+    .splitChoice .card h3{
+      margin-bottom: 10px;
+    }
+
+    .scoreStat{
+      padding:18px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:var(--panel2);
+      margin-bottom:14px;
+    }
+
+    .leaderRow{
+      display:grid;
+      grid-template-columns:36px 1fr auto;
+      gap:12px;
+      align-items:center;
+      padding:10px 0;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+
+    .leaderRow:last-child{ border-bottom:0; }
+
+    .rank{
+      width:36px;
+      height:36px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.07);
+      font-weight:800;
+    }
+
+    .tier{
+      padding:18px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:var(--panel2);
+    }
+
+    .tierLabel{
+      display:inline-block;
+      font-size:12px;
+      padding:5px 9px;
+      border-radius:999px;
+      margin-bottom:10px;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+
+    .bronze{ background: rgba(180,83,9,.22); color: #fcd34d; }
+    .silver{ background: rgba(148,163,184,.18); color: #e5e7eb; }
+    .gold{ background: rgba(245,158,11,.18); color: #fde68a; }
+    .platinum{ background: rgba(96,165,250,.18); color: #bfdbfe; }
+
+    .progressWrap{
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      overflow: hidden;
+      margin: 10px 0 6px;
+      border: 1px solid var(--line);
+    }
+
+    .progressBar{
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width .25s ease;
+    }
+
+    .artistList{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:16px;
+    }
+
+    .portalList{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:16px;
+      margin-top:16px;
+    }
+
+    .formGrid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    label{
+      display:block;
+      font-size:14px;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    input, select, textarea{
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      font:inherit;
+      outline:none;
+    }
+
+    input::placeholder, textarea::placeholder{
+      color:rgba(255,255,255,.42);
+    }
+
+    input:focus, select:focus, textarea:focus{
+      border-color:rgba(124,58,237,.75);
+      box-shadow:0 0 0 3px rgba(124,58,237,.18);
+    }
+
+    textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+
+    .full{ grid-column:1 / -1; }
+
+    .submit{
+      width:100%;
+      padding:13px 18px;
+      border-radius:12px;
+      border:0;
+      background:var(--accent);
+      color:#fff;
+      font:inherit;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .submit:hover{
+      opacity:.96;
+      transform:translateY(-1px);
+    }
+
+    table{
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td{
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      vertical-align: top;
+    }
+
+    th{
+      color: var(--text);
+      font-weight: 700;
+    }
 
     .footer{
       margin-top:40px;
@@ -464,10 +474,10 @@
     @media (max-width: 1020px){
       .hero,
       .founder,
-      .signupBox,
       .grid2,
       .grid3,
-      .tierGrid,
+      .grid4,
+      .splitChoice,
       .artistList,
       .portalList{
         grid-template-columns:1fr;
@@ -475,29 +485,12 @@
     }
 
     @media (max-width: 700px){
-      .wrap{
-        padding:20px 14px 64px;
-      }
-
-      .nav{
-        border-radius:20px;
-      }
-
-      .navlinks{
-        gap:10px;
-      }
-
-      h2{
-        font-size:26px;
-      }
-
-      .sub{
-        font-size:17px;
-      }
-
-      .formGrid{
-        grid-template-columns:1fr;
-      }
+      .wrap{ padding:20px 14px 64px; }
+      .nav{ border-radius:20px; }
+      .navlinks{ gap:10px; }
+      h2{ font-size:26px; }
+      .sub{ font-size:17px; }
+      .formGrid{ grid-template-columns:1fr; }
     }
   </style>
 </head>
@@ -508,12 +501,12 @@
     <div class="nav">
       <div class="brand">EarlySignal</div>
       <div class="navlinks">
-        <a href="#product">Product</a>
         <a href="#founder">Founder</a>
-        <a href="#tiers">Tiers</a>
-        <a href="#leaderboard">Leaderboard</a>
-        <a href="#portal">Artist Portal</a>
+        <a href="#product">Product</a>
         <a href="#join">Join</a>
+        <a href="#artists">Artists</a>
+        <a href="#leaderboard">Leaderboard</a>
+        <a href="#portal">Portal</a>
       </div>
     </div>
 
@@ -522,27 +515,31 @@
         <div class="eyebrow">Fan ranking • rewards system • artist community infrastructure</div>
         <h1>Support should count. And it should compound.</h1>
         <p class="sub">
-          EarlySignal is a platform where fan support is tracked through points, tiers, and leaderboard rankings.
-          Artists can reward their most engaged supporters with exclusive benefits while building a real community around their work.
+          EarlySignal is a platform where artist communities are built through supporter points, tiers, leaderboard rankings, and rewards.
+          Fans get recognized. Artists get infrastructure. Support becomes visible and valuable over time.
         </p>
 
         <div class="heroActions">
-          <a class="btn primary" href="#join">Join as an Artist</a>
-          <a class="btn secondary" href="#join">Join as a Supporter</a>
+          <a class="btn primary" href="#join">Join EarlySignal</a>
+          <a class="btn secondary" href="#artists">Browse Artists</a>
         </div>
       </div>
 
-      <div class="heroCard heroPanel">
-        <div class="scoreCard">
-          <h3>What makes it different</h3>
+      <div class="heroCard heroSide">
+        <div class="scoreStat">
+          <h3>What makes it usable</h3>
           <p class="muted">
-            Most fan support disappears after a stream or purchase. EarlySignal keeps score, creates status, and gives artists a system to reward loyalty over time.
+            This version supports artist and supporter signup, login, supporter actions, point tracking, tier progress, leaderboard updates, artist rewards, and artist profile browsing.
           </p>
         </div>
 
-        <div class="scoreCard" id="leaderboard-preview">
-          <h3>Leaderboard preview</h3>
-          <div id="leaderboardPreviewRows" class="muted">Loading...</div>
+        <div class="scoreStat">
+          <h3>Quick journey</h3>
+          <div class="pill">1. Sign up</div>
+          <div class="pill">2. Pick role</div>
+          <div class="pill">3. Join artist community</div>
+          <div class="pill">4. Earn points</div>
+          <div class="pill">5. Unlock rewards</div>
         </div>
       </div>
     </div>
@@ -560,7 +557,7 @@
             Nick Rod is the Founder and CEO of EarlySignal. As an independent artist, rapper, producer, and songwriter, he built this concept from firsthand experience with the gap between fan support and long term artist growth.
           </p>
           <p class="muted">
-            EarlySignal comes from a simple belief: fans who support early should be visible, rewarded, and remembered, and artists should have better tools to build around the people who actually move their careers forward.
+            EarlySignal starts from one belief: early support should not disappear. It should be tracked, recognized, and rewarded. Artists should know who their real supporters are, and supporters should feel their loyalty actually means something.
           </p>
 
           <div class="ctaRow">
@@ -574,170 +571,77 @@
     <section id="product">
       <h2>What EarlySignal Is</h2>
       <p>
-        EarlySignal is a fan ranking and rewards platform for artists. Every supporter action gets tracked into a points system.
-        As fans support more, they move up tiers and climb artist specific leaderboards.
-      </p>
-      <p>
-        That creates a stronger reason for fans to keep showing up and gives artists a better system for rewarding the people who actually help build their careers.
+        EarlySignal is a supporter ranking and rewards platform for artists. Every supporter action adds to a point system.
+        As fans support more, they move up tiers, rise on artist leaderboards, and unlock deeper access and benefits.
       </p>
 
-      <div class="divider"></div>
-
-      <div class="grid2">
+      <div class="splitChoice">
         <div class="card">
           <h3>For supporters</h3>
-          <p>
-            Support your favorite artists, build points, unlock rankings, and gain access to rewards that get better over time.
-          </p>
+          <p class="muted">Support artists early, track your status, move up tiers, and unlock rewards as your points grow.</p>
+          <a class="btn secondary" href="#join">Join as a Supporter</a>
         </div>
 
         <div class="card">
           <h3>For artists</h3>
-          <p>
-            See who your real fans are, reward them directly, and turn casual listeners into an actual community.
-          </p>
+          <p class="muted">Build your fan community, identify your strongest supporters, create incentives, and reward your top fans directly.</p>
+          <a class="btn secondary" href="#join">Join as an Artist</a>
         </div>
       </div>
     </section>
 
-    <section id="tiers">
+    <section>
       <h2>Tier System</h2>
-      <p class="muted">
-        Supporters move through tiers based on the amount and consistency of their support for a given artist.
-      </p>
-
-      <div class="tierGrid">
+      <div class="grid4">
         <div class="tier">
           <div class="tierLabel bronze">Bronze</div>
           <h3>0 to 499 pts</h3>
           <p class="muted">Early supporter status, updates, and basic access.</p>
         </div>
-
         <div class="tier">
           <div class="tierLabel silver">Silver</div>
           <h3>500 to 1,199 pts</h3>
           <p class="muted">Pre release content, private drops, and early merch access.</p>
         </div>
-
         <div class="tier">
           <div class="tierLabel gold">Gold</div>
           <h3>1,200 to 1,999 pts</h3>
-          <p class="muted">Priority tickets, exclusive livestreams, and artist chat access.</p>
+          <p class="muted">Priority tickets, exclusive livestreams, and artist perks.</p>
         </div>
-
         <div class="tier">
           <div class="tierLabel platinum">Platinum</div>
           <h3>2,000+ pts</h3>
-          <p class="muted">Top leaderboard status, rare rewards, and highest level community access.</p>
+          <p class="muted">Top leaderboard status, rare rewards, and highest level access.</p>
         </div>
       </div>
-    </section>
-
-    <section>
-      <h2>How Supporters Earn Points</h2>
-      <div class="grid3">
-        <div class="card">
-          <h3>Buy merch</h3>
-          <p class="muted">Earn points when purchasing products directly from the artist.</p>
-        </div>
-        <div class="card">
-          <h3>Join paid drops</h3>
-          <p class="muted">Support exclusive releases and limited experiences.</p>
-        </div>
-        <div class="card">
-          <h3>Attend events</h3>
-          <p class="muted">Tickets and attendance increase supporter status.</p>
-        </div>
-        <div class="card">
-          <h3>Join livestreams</h3>
-          <p class="muted">Artists can reward live participation and loyalty.</p>
-        </div>
-        <div class="card">
-          <h3>Direct fan support</h3>
-          <p class="muted">Tips, memberships, and paid community support add to rank.</p>
-        </div>
-        <div class="card">
-          <h3>Consistency bonuses</h3>
-          <p class="muted">Fans who keep supporting over time can grow faster.</p>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2>Artists on EarlySignal</h2>
-      <p class="muted">
-        The platform starts with Nick Rod as Founder and CEO, then expands into a multi artist system where independent artists can build their own supporter ecosystems.
-      </p>
-
-      <div class="artistList" id="artistDirectory">
-        <div class="artistPill muted">Loading artists...</div>
-      </div>
-    </section>
-
-    <section id="portal">
-      <h2>Artist Portal</h2>
-      <p>
-        Artists need more than a page. They need a control center where they can manage community, incentives, and supporter behavior.
-      </p>
-
-      <div class="portalList">
-        <div class="portalItem">
-          <h3>Reward Manager</h3>
-          <p class="muted">Create incentives for fans based on supporter tier or leaderboard position.</p>
-        </div>
-        <div class="portalItem">
-          <h3>Livestream Hub</h3>
-          <p class="muted">Host live sessions and unlock access based on supporter status.</p>
-        </div>
-        <div class="portalItem">
-          <h3>Direct Messaging</h3>
-          <p class="muted">Chat directly with fans as a future premium feature.</p>
-        </div>
-        <div class="portalItem">
-          <h3>Pre Release Uploads</h3>
-          <p class="muted">Share songs before release with selected tiers or top ranked supporters.</p>
-        </div>
-        <div class="portalItem">
-          <h3>Merch and Tickets</h3>
-          <p class="muted">Sell products and ticket access while tying purchases to supporter points.</p>
-        </div>
-        <div class="portalItem">
-          <h3>Analytics Dashboard</h3>
-          <p class="muted">See who supports the most, what converts, and how community grows over time.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="leaderboard">
-      <h2>Leaderboard</h2>
-      <p class="muted">This updates from the live points table in Supabase.</p>
-      <div id="leaderboardRows" class="muted">Loading leaderboard...</div>
     </section>
 
     <section id="join">
       <h2>Join EarlySignal</h2>
       <div id="authStatus" class="status"></div>
 
-      <div class="signupBox">
-        <div class="formCard">
-          <h3>Get access</h3>
-          <p class="muted">Join as an artist if you want to build your own supporter community. Join as a supporter if you want your support to actually count.</p>
+      <div class="grid2">
+        <div class="card">
+          <h3>Create your account</h3>
+          <p class="muted">
+            Join as an artist if you want to build your own supporter community. Join as a supporter if you want your support to actually count.
+          </p>
 
           <form id="joinForm">
             <div class="formGrid">
               <div>
                 <label for="joinName">Name</label>
-                <input id="joinName" name="name" type="text" placeholder="Your name" required />
+                <input id="joinName" type="text" placeholder="Your name" required />
               </div>
 
               <div>
                 <label for="joinEmail">Email</label>
-                <input id="joinEmail" name="email" type="email" placeholder="you@example.com" required />
+                <input id="joinEmail" type="email" placeholder="you@example.com" required />
               </div>
 
               <div>
                 <label for="joinRole">Join as</label>
-                <select id="joinRole" name="role" required>
+                <select id="joinRole" required>
                   <option value="">Select one</option>
                   <option value="artist">Artist</option>
                   <option value="supporter">Supporter</option>
@@ -746,12 +650,12 @@
 
               <div>
                 <label for="joinHandle">Instagram or artist handle</label>
-                <input id="joinHandle" name="handle" type="text" placeholder="@yourhandle" />
+                <input id="joinHandle" type="text" placeholder="@yourhandle" />
               </div>
 
               <div class="full">
                 <label for="joinWhy">What do you want from EarlySignal?</label>
-                <textarea id="joinWhy" name="why" placeholder="Tell me what you want to use this for, or what features matter most to you." required></textarea>
+                <textarea id="joinWhy" placeholder="Tell us what you want to use this for." required></textarea>
               </div>
 
               <div class="full">
@@ -776,7 +680,7 @@
           </form>
         </div>
 
-        <div class="formCard">
+        <div class="card">
           <h3>Your account</h3>
           <div id="userSummary" class="muted">Not logged in yet.</div>
 
@@ -784,19 +688,24 @@
 
           <div id="supporterDashboard" class="hidden">
             <h3>Supporter dashboard</h3>
-            <p class="muted">Log support actions to build your points.</p>
+            <div class="pill">Total points: <strong id="myPoints">0</strong></div>
+            <div class="pill">Current tier: <strong id="myTier">Bronze</strong></div>
+            <div class="pill">Next goal: <strong id="myNextTarget">500</strong></div>
 
-            <div class="pill">Your points: <strong id="myPoints">0</strong></div>
-            <div class="pill">Your tier: <strong id="myTier">Bronze</strong></div>
+            <div class="progressWrap">
+              <div class="progressBar" id="tierProgressBar"></div>
+            </div>
+            <div class="small" id="tierProgressText">0 points until Silver</div>
 
             <div class="divider"></div>
 
             <form id="supportForm">
               <div class="formGrid">
                 <div>
-                  <label for="supportArtist">Artist</label>
+                  <label for="supportArtist">Support an artist</label>
                   <select id="supportArtist" required></select>
                 </div>
+
                 <div>
                   <label for="supportType">Support type</label>
                   <select id="supportType" required>
@@ -807,16 +716,29 @@
                     <option value="500">Direct support (+500)</option>
                   </select>
                 </div>
+
                 <div class="full">
                   <button class="submit" type="submit">Add Support Action</button>
                 </div>
               </div>
             </form>
+
+            <div class="divider"></div>
+            <h3>Your recent actions</h3>
+            <div id="myHistory" class="muted">No support history yet.</div>
+
+            <div class="divider"></div>
+            <h3>Unlocked rewards for your tier</h3>
+            <div id="myUnlockedRewards" class="muted">No unlocked rewards yet.</div>
           </div>
 
           <div id="artistDashboard" class="hidden">
             <h3>Artist dashboard</h3>
-            <p class="muted">Create rewards for your supporters.</p>
+            <div class="pill">Supporters: <strong id="artistSupporterCount">0</strong></div>
+            <div class="pill">Total points earned: <strong id="artistTotalPoints">0</strong></div>
+            <div class="pill">Rewards created: <strong id="artistRewardCount">0</strong></div>
+
+            <div class="divider"></div>
 
             <form id="rewardForm">
               <div class="formGrid">
@@ -824,10 +746,12 @@
                   <label for="rewardTitle">Reward title</label>
                   <input id="rewardTitle" type="text" placeholder="Example: unreleased song access" required />
                 </div>
+
                 <div class="full">
                   <label for="rewardDescription">Reward description</label>
                   <textarea id="rewardDescription" placeholder="Describe the perk clearly." required></textarea>
                 </div>
+
                 <div>
                   <label for="rewardTier">Tier required</label>
                   <select id="rewardTier" required>
@@ -837,6 +761,7 @@
                     <option value="Platinum">Platinum</option>
                   </select>
                 </div>
+
                 <div class="full">
                   <button class="submit" type="submit">Create Reward</button>
                 </div>
@@ -846,17 +771,70 @@
             <div class="divider"></div>
             <h3>Your rewards</h3>
             <div id="myRewards" class="muted">No rewards yet.</div>
+
+            <div class="divider"></div>
+            <h3>Recent supporter activity</h3>
+            <div id="artistActivity" class="muted">No supporter activity yet.</div>
           </div>
 
           <div class="divider"></div>
-
           <button id="logoutBtn" class="btn secondary hidden" type="button">Log Out</button>
         </div>
       </div>
     </section>
 
+    <section id="artists">
+      <h2>Artist Directory</h2>
+      <p class="muted">Click an artist to view their profile, rewards, and leaderboard.</p>
+
+      <div class="artistList" id="artistDirectory">
+        <div class="card muted">Loading artists...</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="grid2">
+        <div class="card">
+          <h3 id="selectedArtistName">Select an artist</h3>
+          <p id="selectedArtistMeta" class="muted">Choose an artist from the directory to view their profile.</p>
+          <div id="selectedArtistStats"></div>
+        </div>
+
+        <div class="card">
+          <h3>Rewards for selected artist</h3>
+          <div id="selectedArtistRewards" class="muted">No artist selected yet.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="leaderboard">
+      <h2>Leaderboard</h2>
+      <p class="muted">Top supporters across the platform, based on total points logged.</p>
+      <div id="leaderboardRows" class="muted">Loading leaderboard...</div>
+    </section>
+
+    <section id="portal">
+      <h2>Artist Portal</h2>
+      <p>This is the infrastructure layer artists use to run their community, reward loyalty, and build repeat participation.</p>
+
+      <div class="portalList">
+        <div class="card">
+          <h3>Reward Manager</h3>
+          <p class="muted">Create incentives for fans based on tier or leaderboard position.</p>
+        </div>
+        <div class="card">
+          <h3>Community Status</h3>
+          <p class="muted">See who your real supporters are and how they rank over time.</p>
+        </div>
+        <div class="card">
+          <h3>Support Analytics</h3>
+          <p class="muted">Track supporter count, point growth, and repeat engagement.</p>
+        </div>
+      </div>
+    </section>
+
     <section>
-      <h2>Live rewards feed</h2>
+      <h2>Live Rewards Feed</h2>
       <div id="rewardFeed" class="muted">Loading rewards...</div>
     </section>
 
@@ -873,10 +851,9 @@
     const supabaseKey = "sb_publishable_awRJTr9ZFL_-HOeBeUPB_A_5Q6PW9bh";
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const FOUNDER_IMAGE = "data:image/jpeg;base64,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";
+    const FOUNDER_IMAGE = "data:image/jpeg;base64,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";
 
     const $ = (id) => document.getElementById(id);
-
     $("founderImage").src = FOUNDER_IMAGE;
     $("year").textContent = new Date().getFullYear();
 
@@ -886,6 +863,17 @@
     let currentArtistRecord = null;
     let currentSupporterRecord = null;
     let cachedArtists = [];
+    let cachedPoints = [];
+    let cachedRewards = [];
+    let selectedArtistId = null;
+
+    const ACTION_LABELS = {
+      50: "Stream / engagement",
+      150: "Merch purchase",
+      250: "Drop purchase",
+      300: "Ticket / event",
+      500: "Direct support"
+    };
 
     function showStatus(message, type = "good") {
       const box = $("authStatus");
@@ -903,417 +891,16 @@
       return "Bronze";
     }
 
+    function nextTierInfo(points) {
+      if (points < 500) return { next: "Silver", target: 500, remaining: 500 - points, base: 0 };
+      if (points < 1200) return { next: "Gold", target: 1200, remaining: 1200 - points, base: 500 };
+      if (points < 2000) return { next: "Platinum", target: 2000, remaining: 2000 - points, base: 1200 };
+      return { next: "Top tier reached", target: points, remaining: 0, base: 2000 };
+    }
+
     function supporterLabel(id) {
       if (!id) return "Supporter";
       return `Supporter ${id.slice(0, 6)}`;
     }
 
-    async function ensureUserProfileFromPending(sessionUser) {
-      const pending = localStorage.getItem("earlysignal_pending_join");
-      if (!pending) return;
-
-      const data = JSON.parse(pending);
-
-      const { error: userError } = await supabase
-        .from("users")
-        .upsert({
-          id: sessionUser.id,
-          email: sessionUser.email,
-          role: data.role,
-          username: data.name || data.handle || sessionUser.email
-        });
-
-      if (userError) {
-        showStatus(`Could not save user profile: ${userError.message}`, "warn");
-        return;
-      }
-
-      if (data.role === "artist") {
-        const { data: existingArtist } = await supabase
-          .from("artists")
-          .select("*")
-          .eq("user_id", sessionUser.id)
-          .maybeSingle();
-
-        if (!existingArtist) {
-          const { error } = await supabase.from("artists").insert({
-            user_id: sessionUser.id,
-            name: data.name || data.handle || "Unnamed Artist"
-          });
-          if (error) {
-            showStatus(`Could not create artist profile: ${error.message}`, "warn");
-            return;
-          }
-        }
-      }
-
-      if (data.role === "supporter") {
-        const { data: existingSupporter } = await supabase
-          .from("supporters")
-          .select("*")
-          .eq("user_id", sessionUser.id)
-          .maybeSingle();
-
-        if (!existingSupporter) {
-          const { error } = await supabase.from("supporters").insert({
-            user_id: sessionUser.id
-          });
-          if (error) {
-            showStatus(`Could not create supporter profile: ${error.message}`, "warn");
-            return;
-          }
-        }
-      }
-
-      localStorage.removeItem("earlysignal_pending_join");
-      showStatus("You’re in. Your EarlySignal account is live.");
-    }
-
-    async function loadCurrentUserState() {
-      const { data: { session } } = await supabase.auth.getSession();
-      currentSession = session;
-      currentUser = session?.user ?? null;
-
-      if (!currentUser) {
-        currentRole = null;
-        currentArtistRecord = null;
-        currentSupporterRecord = null;
-        $("userSummary").textContent = "Not logged in yet.";
-        $("artistDashboard").classList.add("hidden");
-        $("supporterDashboard").classList.add("hidden");
-        $("logoutBtn").classList.add("hidden");
-        return;
-      }
-
-      await ensureUserProfileFromPending(currentUser);
-
-      const { data: me } = await supabase
-        .from("users")
-        .select("*")
-        .eq("id", currentUser.id)
-        .maybeSingle();
-
-      currentRole = me?.role || null;
-
-      if (currentRole === "artist") {
-        const { data: artist } = await supabase
-          .from("artists")
-          .select("*")
-          .eq("user_id", currentUser.id)
-          .maybeSingle();
-        currentArtistRecord = artist || null;
-      } else {
-        currentArtistRecord = null;
-      }
-
-      if (currentRole === "supporter") {
-        const { data: supporter } = await supabase
-          .from("supporters")
-          .select("*")
-          .eq("user_id", currentUser.id)
-          .maybeSingle();
-        currentSupporterRecord = supporter || null;
-      } else {
-        currentSupporterRecord = null;
-      }
-
-      $("logoutBtn").classList.remove("hidden");
-      $("userSummary").innerHTML = `
-        <div class="pill">Logged in as: <strong>${currentUser.email}</strong></div>
-        <div class="pill">Role: <strong>${currentRole || "Not set"}</strong></div>
-      `;
-
-      if (currentRole === "artist") {
-        $("artistDashboard").classList.remove("hidden");
-        $("supporterDashboard").classList.add("hidden");
-      } else if (currentRole === "supporter") {
-        $("supporterDashboard").classList.remove("hidden");
-        $("artistDashboard").classList.add("hidden");
-      } else {
-        $("artistDashboard").classList.add("hidden");
-        $("supporterDashboard").classList.add("hidden");
-      }
-    }
-
-    async function loadArtists() {
-      const { data, error } = await supabase
-        .from("artists")
-        .select("*")
-        .order("created_at", { ascending: true });
-
-      if (error) {
-        $("artistDirectory").innerHTML = `<div class="artistPill muted">Could not load artists.</div>`;
-        return;
-      }
-
-      cachedArtists = data || [];
-
-      if (!cachedArtists.length) {
-        $("artistDirectory").innerHTML = `<div class="artistPill muted">No artists live yet. Join as an artist to be the first.</div>`;
-      } else {
-        $("artistDirectory").innerHTML = cachedArtists.map((artist, index) => `
-          <div class="artistPill">
-            <strong>${artist.name || `Artist ${index + 1}`}</strong>
-            ${artist.user_id === currentUser?.id ? "Your artist profile" : "Independent artist on EarlySignal"}
-          </div>
-        `).join("");
-      }
-
-      const supportArtist = $("supportArtist");
-      supportArtist.innerHTML = cachedArtists.map(a => `<option value="${a.id}">${a.name}</option>`).join("");
-    }
-
-    async function loadLeaderboard() {
-      const { data: pointsRows, error } = await supabase
-        .from("points")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) {
-        $("leaderboardRows").textContent = "Could not load leaderboard.";
-        $("leaderboardPreviewRows").textContent = "Could not load preview.";
-        return;
-      }
-
-      const totals = {};
-      (pointsRows || []).forEach(row => {
-        const key = `${row.artist_id}::${row.supporter_id}`;
-        if (!totals[key]) {
-          totals[key] = {
-            artist_id: row.artist_id,
-            supporter_id: row.supporter_id,
-            points: 0
-          };
-        }
-        totals[key].points += Number(row.points || 0);
-      });
-
-      const sorted = Object.values(totals).sort((a, b) => b.points - a.points).slice(0, 12);
-
-      if (!sorted.length) {
-        const empty = "No support actions yet. Log the first one from a supporter account.";
-        $("leaderboardRows").textContent = empty;
-        $("leaderboardPreviewRows").textContent = empty;
-        return;
-      }
-
-      const getArtistName = (artistId) => cachedArtists.find(a => a.id === artistId)?.name || "Artist";
-
-      const html = sorted.map((entry, index) => `
-        <div class="leaderRow">
-          <div class="rank">${index + 1}</div>
-          <div>
-            <strong>${supporterLabel(entry.supporter_id)}</strong>
-            <div class="small">${getArtistName(entry.artist_id)} • ${tierFromPoints(entry.points)}</div>
-          </div>
-          <div>${entry.points} pts</div>
-        </div>
-      `).join("");
-
-      $("leaderboardRows").innerHTML = html;
-      $("leaderboardPreviewRows").innerHTML = html.split("</div>").slice(0, 12).join("</div>");
-    }
-
-    async function loadRewardsFeed() {
-      const { data, error } = await supabase
-        .from("rewards")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) {
-        $("rewardFeed").textContent = "Could not load rewards.";
-        return;
-      }
-
-      if (!data?.length) {
-        $("rewardFeed").textContent = "No rewards posted yet.";
-        return;
-      }
-
-      const getArtistName = (artistId) => cachedArtists.find(a => a.id === artistId)?.name || "Artist";
-
-      $("rewardFeed").innerHTML = data.map(r => `
-        <div class="card" style="margin-top:12px;">
-          <h3>${r.title}</h3>
-          <p class="muted">${r.description}</p>
-          <div class="pill">${getArtistName(r.artist_id)}</div>
-          <div class="pill">${r.tier_required}</div>
-        </div>
-      `).join("");
-    }
-
-    async function loadMyRewards() {
-      if (!currentArtistRecord) {
-        $("myRewards").textContent = "No rewards yet.";
-        return;
-      }
-
-      const { data, error } = await supabase
-        .from("rewards")
-        .select("*")
-        .eq("artist_id", currentArtistRecord.id)
-        .order("created_at", { ascending: false });
-
-      if (error) {
-        $("myRewards").textContent = "Could not load your rewards.";
-        return;
-      }
-
-      if (!data?.length) {
-        $("myRewards").textContent = "No rewards yet.";
-        return;
-      }
-
-      $("myRewards").innerHTML = data.map(r => `
-        <div class="card" style="margin-top:12px;">
-          <h3>${r.title}</h3>
-          <p class="muted">${r.description}</p>
-          <div class="pill">${r.tier_required}</div>
-        </div>
-      `).join("");
-    }
-
-    async function loadMySupporterStats() {
-      if (!currentSupporterRecord) {
-        $("myPoints").textContent = "0";
-        $("myTier").textContent = "Bronze";
-        return;
-      }
-
-      const { data, error } = await supabase
-        .from("points")
-        .select("*")
-        .eq("supporter_id", currentSupporterRecord.id);
-
-      if (error) return;
-
-      const total = (data || []).reduce((sum, row) => sum + Number(row.points || 0), 0);
-      $("myPoints").textContent = String(total);
-      $("myTier").textContent = tierFromPoints(total);
-    }
-
-    async function refreshEverything() {
-      await loadCurrentUserState();
-      await loadArtists();
-      await loadLeaderboard();
-      await loadRewardsFeed();
-      await loadMyRewards();
-      await loadMySupporterStats();
-    }
-
-    $("joinForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const payload = {
-        name: $("joinName").value.trim(),
-        email: $("joinEmail").value.trim(),
-        role: $("joinRole").value,
-        handle: $("joinHandle").value.trim(),
-        why: $("joinWhy").value.trim()
-      };
-
-      localStorage.setItem("earlysignal_pending_join", JSON.stringify(payload));
-
-      const { error } = await supabase.auth.signInWithOtp({
-        email: payload.email,
-        options: {
-          emailRedirectTo: window.location.origin + window.location.pathname
-        }
-      });
-
-      if (error) {
-        showStatus(`Could not send magic link: ${error.message}`, "warn");
-        return;
-      }
-
-      showStatus("Check your email. Click the magic link, then come back here.");
-      e.target.reset();
-    });
-
-    $("loginForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const email = $("loginEmail").value.trim();
-
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: {
-          emailRedirectTo: window.location.origin + window.location.pathname
-        }
-      });
-
-      if (error) {
-        showStatus(`Could not send login link: ${error.message}`, "warn");
-        return;
-      }
-
-      showStatus("Login link sent. Check your email.");
-      e.target.reset();
-    });
-
-    $("supportForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      if (!currentSupporterRecord) {
-        showStatus("Log in as a supporter first.", "warn");
-        return;
-      }
-
-      const artistId = $("supportArtist").value;
-      const points = Number($("supportType").value);
-
-      const { error } = await supabase.from("points").insert({
-        supporter_id: currentSupporterRecord.id,
-        artist_id: artistId,
-        points
-      });
-
-      if (error) {
-        showStatus(`Could not add support action: ${error.message}`, "warn");
-        return;
-      }
-
-      showStatus("Support action added.");
-      await refreshEverything();
-    });
-
-    $("rewardForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      if (!currentArtistRecord) {
-        showStatus("Log in as an artist first.", "warn");
-        return;
-      }
-
-      const payload = {
-        artist_id: currentArtistRecord.id,
-        title: $("rewardTitle").value.trim(),
-        description: $("rewardDescription").value.trim(),
-        tier_required: $("rewardTier").value
-      };
-
-      const { error } = await supabase.from("rewards").insert(payload);
-
-      if (error) {
-        showStatus(`Could not create reward: ${error.message}`, "warn");
-        return;
-      }
-
-      showStatus("Reward created.");
-      e.target.reset();
-      await refreshEverything();
-    });
-
-    $("logoutBtn").addEventListener("click", async () => {
-      await supabase.auth.signOut();
-      showStatus("Logged out.");
-      await refreshEverything();
-    });
-
-    supabase.auth.onAuthStateChange(async () => {
-      await refreshEverything();
-    });
-
-    await refreshEverything();
-  </script>
-</body>
-</html>
+    function
