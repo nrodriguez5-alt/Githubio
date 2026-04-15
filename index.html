@@ -334,7 +334,7 @@
       const name=$("joinName").value.trim(), email=$("joinEmail").value.trim(), role=$("joinRole").value, handle=$("joinHandle").value.trim(), why=$("joinWhy").value.trim();
       if (!role) { showStatus("Please select a role.", "warn"); return; }
       showStatus("Sending your magic link...", "warn");
-      const { error } = await supabase.auth.signInWithOtp({ email, options:{ data:{ name, role, handle, why } } });
+      const { error } = await supabase.auth.signInWithOtp({ email, options:{ emailRedirectTo:"https://nrodriguez5-alt.github.io/Githubio/", data:{ name, role, handle, why } } });
       if (error) { showStatus(error.message, "bad"); return; }
       showStatus("Check your email for your magic link to finish joining.", "good");
       e.target.reset();
@@ -344,7 +344,7 @@
       e.preventDefault();
       const email = $("loginEmail").value.trim();
       showStatus("Sending login link...", "warn");
-      const { error } = await supabase.auth.signInWithOtp({ email });
+      const { error } = await supabase.auth.signInWithOtp({ email, options:{ emailRedirectTo:"https://nrodriguez5-alt.github.io/Githubio/" } });
       if (error) { showStatus(error.message, "bad"); return; }
       showStatus("Login link sent. Check your email.", "good");
       e.target.reset();
