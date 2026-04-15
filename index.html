@@ -6,118 +6,78 @@
   <title>EarlySignal</title>
   <meta name="description" content="EarlySignal is a fan ranking and rewards platform for artists. Support gets tracked, ranked, and rewarded over time." />
   <style>
-    :root {
-      --bg: #0b0c10;
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.035);
-      --text: rgba(255,255,255,.95);
-      --muted: rgba(255,255,255,.72);
-      --line: rgba(255,255,255,.14);
-      --accent: #7c3aed;
-      --accent2: #60a5fa;
-      --shadow: 0 18px 60px rgba(0,0,0,.42);
-      --radius: 20px;
-      --max: 1180px;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
-      color: var(--text);
-      line-height: 1.6;
-      background:
-        radial-gradient(1200px 700px at 8% 0%, rgba(124,58,237,.34), transparent 55%),
-        radial-gradient(900px 700px at 92% 12%, rgba(34,197,94,.14), transparent 58%),
-        radial-gradient(900px 650px at 50% 110%, rgba(59,130,246,.10), transparent 55%),
-        var(--bg);
-    }
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
-    .wrap { max-width: var(--max); margin: 0 auto; padding: 28px 18px 80px; }
-    .nav {
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 16px; padding: 12px 16px; border: 1px solid var(--line);
-      border-radius: 999px; background: rgba(0,0,0,.22);
-      backdrop-filter: blur(10px); box-shadow: var(--shadow);
-      margin-bottom: 28px; flex-wrap: wrap;
-      position: sticky; top: 14px; z-index: 30;
-    }
-    .brand { font-weight: 800; letter-spacing: .2px; white-space: nowrap; }
-    .navlinks { display: flex; gap: 14px; flex-wrap: wrap; }
-    .navlinks a { color: var(--muted); font-size: 14px; }
-    .navlinks a:hover { color: var(--text); }
-    .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 22px; align-items: stretch; margin-bottom: 24px; }
-    .heroCard, section { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); box-shadow: var(--shadow); }
-    .heroCopy { padding: 28px; }
-    .heroSide { padding: 22px; }
-    .eyebrow { display: inline-block; font-size: 13px; color: var(--muted); padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.04); margin-bottom: 14px; }
-    h1 { font-size: clamp(40px, 7vw, 78px); line-height: 1.01; letter-spacing: -1.4px; margin: 0 0 14px; max-width: 10ch; }
-    .sub { font-size: 18px; color: var(--muted); max-width: 760px; margin: 0; }
-    .heroActions, .ctaRow { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
-    .btn { display: inline-block; padding: 12px 18px; border-radius: 12px; font-weight: 700; transition: .18s ease; border: 1px solid transparent; cursor: pointer; background: none; color: inherit; }
-    .btn.primary { background: var(--accent); color: #fff; }
-    .btn.primary:hover { transform: translateY(-1px); opacity: .96; }
-    .btn.secondary { background: rgba(255,255,255,.06); border-color: var(--line); color: var(--text); }
-    .btn.secondary:hover { transform: translateY(-1px); background: rgba(255,255,255,.10); }
-    section { padding: 24px; margin-top: 22px; }
-    h2 { margin: 0 0 10px; font-size: 30px; letter-spacing: -.3px; }
-    h3 { margin: 0 0 8px; font-size: 20px; }
-    p { margin: 0 0 12px; }
-    .muted { color: var(--muted); }
-    .small { font-size: 13px; color: var(--muted); }
-    .divider { height: 1px; background: var(--line); margin: 16px 0; }
-    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-    .card { padding: 18px; border-radius: 18px; border: 1px solid var(--line); background: var(--panel2); }
-    .card.clickable { cursor: pointer; transition: .18s ease; }
-    .card.clickable:hover { transform: translateY(-2px); border-color: rgba(124,58,237,.45); }
-    .card.active { border-color: rgba(96,165,250,.6); background: rgba(96,165,250,.08); }
-    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.05); color: var(--muted); font-size: 13px; margin-right: 8px; margin-bottom: 8px; }
-    .status { padding: 12px 14px; border-radius: 14px; margin-bottom: 14px; border: 1px solid var(--line); background: rgba(255,255,255,.04); color: var(--muted); display: none; }
-    .status.show { display: block; }
-    .status.good { border-color: rgba(34,197,94,.35); color: #d1fae5; }
-    .status.warn { border-color: rgba(245,158,11,.35); color: #fde68a; }
-    .status.bad { border-color: rgba(239,68,68,.35); color: #fecaca; }
-    .hidden { display: none !important; }
-    .founder { display: grid; grid-template-columns: .95fr 1.05fr; gap: 22px; align-items: center; }
-    .founder img { width: 100%; border-radius: 18px; border: 1px solid var(--line); object-fit: cover; background: #111; max-height: 700px; }
-    .splitChoice { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; }
-    .splitChoice .card h3 { margin-bottom: 10px; }
-    .scoreStat { padding: 18px; border-radius: 18px; border: 1px solid var(--line); background: var(--panel2); margin-bottom: 14px; }
-    .scoreStat:last-child { margin-bottom: 0; }
-    .leaderRow { display: grid; grid-template-columns: 36px 1fr auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.07); }
-    .leaderRow:last-child { border-bottom: 0; }
-    .rank { width: 36px; height: 36px; border-radius: 999px; display: grid; place-items: center; background: rgba(255,255,255,.07); font-weight: 800; }
-    .tier { padding: 18px; border-radius: 18px; border: 1px solid var(--line); background: var(--panel2); }
-    .tierLabel { display: inline-block; font-size: 12px; padding: 5px 9px; border-radius: 999px; margin-bottom: 10px; font-weight: 800; letter-spacing: .2px; }
-    .bronze { background: rgba(180,83,9,.22); color: #fcd34d; }
-    .silver { background: rgba(148,163,184,.18); color: #e5e7eb; }
-    .gold { background: rgba(245,158,11,.18); color: #fde68a; }
-    .platinum { background: rgba(96,165,250,.18); color: #bfdbfe; }
-    .progressWrap { width: 100%; height: 12px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; margin: 10px 0 6px; border: 1px solid var(--line); }
-    .progressBar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .25s ease; }
-    .artistList { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .artistPhoto { width: 100%; height: 140px; object-fit: cover; border-radius: 12px; margin-bottom: 12px; background: rgba(255,255,255,.04); display: block; }
-    .spotifyBtn { display: inline-block; margin-top: 10px; font-size: 12px; color: rgba(255,255,255,.55); border: 1px solid rgba(255,255,255,.14); padding: 4px 10px; border-radius: 999px; text-decoration: none; transition: .15s ease; }
-    .spotifyBtn:hover { color: #1db954; border-color: #1db954; }
-    .formGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 6px; }
-    input, select, textarea { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--line); background: rgba(255,255,255,.04); color: var(--text); font: inherit; outline: none; }
-    input::placeholder, textarea::placeholder { color: rgba(255,255,255,.42); }
-    input:focus, select:focus, textarea:focus { border-color: rgba(124,58,237,.75); box-shadow: 0 0 0 3px rgba(124,58,237,.18); }
-    textarea { min-height: 120px; resize: vertical; }
-    .full { grid-column: 1 / -1; }
-    .submit { width: 100%; padding: 13px 18px; border-radius: 12px; border: 0; background: var(--accent); color: #fff; font: inherit; font-weight: 800; cursor: pointer; }
-    .submit:hover { opacity: .96; transform: translateY(-1px); }
-    .footer { margin-top: 40px; text-align: center; color: var(--muted); font-size: 13px; }
-    @media (max-width: 1020px) { .hero, .founder, .grid2, .grid4, .splitChoice, .artistList { grid-template-columns: 1fr; } }
-    @media (max-width: 700px) { .wrap { padding: 20px 14px 64px; } .nav { border-radius: 20px; } .navlinks { gap: 10px; } h2 { font-size: 26px; } .sub { font-size: 17px; } .formGrid { grid-template-columns: 1fr; } }
+    :root{--bg:#0b0c10;--panel:rgba(255,255,255,.06);--panel2:rgba(255,255,255,.035);--text:rgba(255,255,255,.95);--muted:rgba(255,255,255,.72);--line:rgba(255,255,255,.14);--accent:#7c3aed;--accent2:#60a5fa;--shadow:0 18px 60px rgba(0,0,0,.42);--radius:20px;--max:1180px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,sans-serif;color:var(--text);line-height:1.6;background:radial-gradient(1200px 700px at 8% 0%,rgba(124,58,237,.34),transparent 55%),radial-gradient(900px 700px at 92% 12%,rgba(34,197,94,.14),transparent 58%),radial-gradient(900px 650px at 50% 110%,rgba(59,130,246,.10),transparent 55%),var(--bg)}
+    a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
+    .wrap{max-width:var(--max);margin:0 auto;padding:28px 18px 80px}
+    .nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 16px;border:1px solid var(--line);border-radius:999px;background:rgba(0,0,0,.22);backdrop-filter:blur(10px);box-shadow:var(--shadow);margin-bottom:28px;flex-wrap:wrap;position:sticky;top:14px;z-index:30}
+    .brand{font-weight:800;letter-spacing:.2px;white-space:nowrap}
+    .navlinks{display:flex;gap:14px;flex-wrap:wrap}
+    .navlinks a{color:var(--muted);font-size:14px}
+    .navlinks a:hover{color:var(--text)}
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:stretch;margin-bottom:24px}
+    .heroCard,section{border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);box-shadow:var(--shadow)}
+    .heroCopy{padding:28px}.heroSide{padding:22px}
+    .eyebrow{display:inline-block;font-size:13px;color:var(--muted);padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.04);margin-bottom:14px}
+    h1{font-size:clamp(40px,7vw,78px);line-height:1.01;letter-spacing:-1.4px;margin:0 0 14px;max-width:10ch}
+    .sub{font-size:18px;color:var(--muted);max-width:760px;margin:0}
+    .heroActions,.ctaRow{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+    .btn{display:inline-block;padding:12px 18px;border-radius:12px;font-weight:700;transition:.18s ease;border:1px solid transparent;cursor:pointer;background:none;color:inherit}
+    .btn.primary{background:var(--accent);color:#fff}
+    .btn.primary:hover{transform:translateY(-1px);opacity:.96}
+    .btn.secondary{background:rgba(255,255,255,.06);border-color:var(--line);color:var(--text)}
+    .btn.secondary:hover{transform:translateY(-1px);background:rgba(255,255,255,.10)}
+    section{padding:24px;margin-top:22px}
+    h2{margin:0 0 10px;font-size:30px;letter-spacing:-.3px}
+    h3{margin:0 0 8px;font-size:20px}
+    p{margin:0 0 12px}
+    .muted{color:var(--muted)}.small{font-size:13px;color:var(--muted)}
+    .divider{height:1px;background:var(--line);margin:16px 0}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .card{padding:18px;border-radius:18px;border:1px solid var(--line);background:var(--panel2)}
+    .card.clickable{cursor:pointer;transition:.18s ease}
+    .card.clickable:hover{transform:translateY(-2px);border-color:rgba(124,58,237,.45)}
+    .card.active{border-color:rgba(96,165,250,.6);background:rgba(96,165,250,.08)}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--muted);font-size:13px;margin-right:8px;margin-bottom:8px}
+    .status{padding:12px 14px;border-radius:14px;margin-bottom:14px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--muted);display:none}
+    .status.show{display:block}.status.good{border-color:rgba(34,197,94,.35);color:#d1fae5}.status.warn{border-color:rgba(245,158,11,.35);color:#fde68a}.status.bad{border-color:rgba(239,68,68,.35);color:#fecaca}
+    .hidden{display:none !important}
+    .founder{display:grid;grid-template-columns:.95fr 1.05fr;gap:22px;align-items:center}
+    .founder img{width:100%;border-radius:18px;border:1px solid var(--line);object-fit:cover;background:#111;max-height:700px}
+    .splitChoice{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+    .splitChoice .card h3{margin-bottom:10px}
+    .scoreStat{padding:18px;border-radius:18px;border:1px solid var(--line);background:var(--panel2);margin-bottom:14px}
+    .scoreStat:last-child{margin-bottom:0}
+    .leaderRow{display:grid;grid-template-columns:36px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+    .leaderRow:last-child{border-bottom:0}
+    .rank{width:36px;height:36px;border-radius:999px;display:grid;place-items:center;background:rgba(255,255,255,.07);font-weight:800}
+    .tier{padding:18px;border-radius:18px;border:1px solid var(--line);background:var(--panel2)}
+    .tierLabel{display:inline-block;font-size:12px;padding:5px 9px;border-radius:999px;margin-bottom:10px;font-weight:800;letter-spacing:.2px}
+    .bronze{background:rgba(180,83,9,.22);color:#fcd34d}.silver{background:rgba(148,163,184,.18);color:#e5e7eb}.gold{background:rgba(245,158,11,.18);color:#fde68a}.platinum{background:rgba(96,165,250,.18);color:#bfdbfe}
+    .progressWrap{width:100%;height:12px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin:10px 0 6px;border:1px solid var(--line)}
+    .progressBar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .25s ease}
+    .artistList{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .artistPhoto{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:top center;border-radius:12px;margin-bottom:12px;background:rgba(255,255,255,.04);display:block}
+    .spotifyBtn{display:inline-block;margin-top:10px;font-size:12px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.14);padding:4px 10px;border-radius:999px;text-decoration:none;transition:.15s ease}
+    .spotifyBtn:hover{color:#1db954;border-color:#1db954}
+    .formGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    label{display:block;font-size:14px;font-weight:700;margin-bottom:6px}
+    input,select,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);font:inherit;outline:none}
+    input::placeholder,textarea::placeholder{color:rgba(255,255,255,.42)}
+    input:focus,select:focus,textarea:focus{border-color:rgba(124,58,237,.75);box-shadow:0 0 0 3px rgba(124,58,237,.18)}
+    textarea{min-height:120px;resize:vertical}
+    .full{grid-column:1/-1}
+    .submit{width:100%;padding:13px 18px;border-radius:12px;border:0;background:var(--accent);color:#fff;font:inherit;font-weight:800;cursor:pointer}
+    .submit:hover{opacity:.96;transform:translateY(-1px)}
+    .footer{margin-top:40px;text-align:center;color:var(--muted);font-size:13px}
+    @media(max-width:1020px){.hero,.founder,.grid2,.grid4,.splitChoice,.artistList{grid-template-columns:1fr}}
+    @media(max-width:700px){.wrap{padding:20px 14px 64px}.nav{border-radius:20px}.navlinks{gap:10px}h2{font-size:26px}.sub{font-size:17px}.formGrid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
   <div class="wrap">
-
     <div class="nav">
       <div class="brand">EarlySignal</div>
       <div class="navlinks">
@@ -209,46 +169,20 @@
           <p class="muted">Join as an artist if you want to build your own supporter community. Join as a supporter if you want your support to actually count.</p>
           <form id="joinForm">
             <div class="formGrid">
-              <div>
-                <label for="joinName">Name</label>
-                <input id="joinName" type="text" placeholder="Your name" required />
-              </div>
-              <div>
-                <label for="joinEmail">Email</label>
-                <input id="joinEmail" type="email" placeholder="you@example.com" required />
-              </div>
-              <div>
-                <label for="joinRole">Join as</label>
-                <select id="joinRole" required>
-                  <option value="">Select one</option>
-                  <option value="artist">Artist</option>
-                  <option value="supporter">Supporter</option>
-                </select>
-              </div>
-              <div>
-                <label for="joinHandle">Instagram or artist handle</label>
-                <input id="joinHandle" type="text" placeholder="@yourhandle" />
-              </div>
-              <div class="full">
-                <label for="joinWhy">What do you want from EarlySignal?</label>
-                <textarea id="joinWhy" placeholder="Tell us what you want to use this for." required></textarea>
-              </div>
-              <div class="full">
-                <button class="submit" type="submit">Send Magic Link and Join</button>
-              </div>
+              <div><label for="joinName">Name</label><input id="joinName" type="text" placeholder="Your name" required /></div>
+              <div><label for="joinEmail">Email</label><input id="joinEmail" type="email" placeholder="you@example.com" required /></div>
+              <div><label for="joinRole">Join as</label><select id="joinRole" required><option value="">Select one</option><option value="artist">Artist</option><option value="supporter">Supporter</option></select></div>
+              <div><label for="joinHandle">Instagram or artist handle</label><input id="joinHandle" type="text" placeholder="@yourhandle" /></div>
+              <div class="full"><label for="joinWhy">What do you want from EarlySignal?</label><textarea id="joinWhy" placeholder="Tell us what you want to use this for." required></textarea></div>
+              <div class="full"><button class="submit" type="submit">Send Magic Link and Join</button></div>
             </div>
           </form>
           <div class="divider"></div>
           <h3>Already signed up?</h3>
           <form id="loginForm">
             <div class="formGrid">
-              <div class="full">
-                <label for="loginEmail">Email</label>
-                <input id="loginEmail" type="email" placeholder="you@example.com" required />
-              </div>
-              <div class="full">
-                <button class="submit" type="submit">Email Me a Login Link</button>
-              </div>
+              <div class="full"><label for="loginEmail">Email</label><input id="loginEmail" type="email" placeholder="you@example.com" required /></div>
+              <div class="full"><button class="submit" type="submit">Email Me a Login Link</button></div>
             </div>
           </form>
         </div>
@@ -266,23 +200,9 @@
             <div class="divider"></div>
             <form id="supportForm">
               <div class="formGrid">
-                <div>
-                  <label for="supportArtist">Support an artist</label>
-                  <select id="supportArtist" required></select>
-                </div>
-                <div>
-                  <label for="supportType">Support type</label>
-                  <select id="supportType" required>
-                    <option value="50">Stream / engagement (+50)</option>
-                    <option value="150">Merch purchase (+150)</option>
-                    <option value="250">Drop purchase (+250)</option>
-                    <option value="300">Ticket / event (+300)</option>
-                    <option value="500">Direct support (+500)</option>
-                  </select>
-                </div>
-                <div class="full">
-                  <button class="submit" type="submit">Add Support Action</button>
-                </div>
+                <div><label for="supportArtist">Support an artist</label><select id="supportArtist" required></select></div>
+                <div><label for="supportType">Support type</label><select id="supportType" required><option value="50">Stream / engagement (+50)</option><option value="150">Merch purchase (+150)</option><option value="250">Drop purchase (+250)</option><option value="300">Ticket / event (+300)</option><option value="500">Direct support (+500)</option></select></div>
+                <div class="full"><button class="submit" type="submit">Add Support Action</button></div>
               </div>
             </form>
             <div class="divider"></div>
@@ -300,26 +220,10 @@
             <div class="divider"></div>
             <form id="rewardForm">
               <div class="formGrid">
-                <div class="full">
-                  <label for="rewardTitle">Reward title</label>
-                  <input id="rewardTitle" type="text" placeholder="Example: unreleased song access" required />
-                </div>
-                <div class="full">
-                  <label for="rewardDescription">Reward description</label>
-                  <textarea id="rewardDescription" placeholder="Describe the perk clearly." required></textarea>
-                </div>
-                <div>
-                  <label for="rewardTier">Tier required</label>
-                  <select id="rewardTier" required>
-                    <option value="Bronze">Bronze</option>
-                    <option value="Silver">Silver</option>
-                    <option value="Gold">Gold</option>
-                    <option value="Platinum">Platinum</option>
-                  </select>
-                </div>
-                <div class="full">
-                  <button class="submit" type="submit">Create Reward</button>
-                </div>
+                <div class="full"><label for="rewardTitle">Reward title</label><input id="rewardTitle" type="text" placeholder="Example: unreleased song access" required /></div>
+                <div class="full"><label for="rewardDescription">Reward description</label><textarea id="rewardDescription" placeholder="Describe the perk clearly." required></textarea></div>
+                <div><label for="rewardTier">Tier required</label><select id="rewardTier" required><option value="Bronze">Bronze</option><option value="Silver">Silver</option><option value="Gold">Gold</option><option value="Platinum">Platinum</option></select></div>
+                <div class="full"><button class="submit" type="submit">Create Reward</button></div>
               </div>
             </form>
             <div class="divider"></div>
@@ -338,9 +242,7 @@
     <section id="artists">
       <h2>Artist Directory</h2>
       <p class="muted">Click an artist to view their profile, rewards, and community stats.</p>
-      <div class="artistList" id="artistDirectory">
-        <div class="card muted">Loading artists...</div>
-      </div>
+      <div class="artistList" id="artistDirectory"><div class="card muted">Loading artists...</div></div>
       <div class="divider"></div>
       <div class="grid2">
         <div class="card">
@@ -362,12 +264,10 @@
     </section>
 
     <div class="footer">&copy; <span id="year"></span> EarlySignal / Nick Rod</div>
-
   </div>
 
   <script type="module">
     import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-
     const supabaseUrl = "https://lypoiwjjqbqwooclcqrm.supabase.co";
     const supabaseKey = "sb_publishable_awRJTr9ZFL_-HOeBeUPB_A_5Q6PW9bh";
     const supabase = createClient(supabaseUrl, supabaseKey);
@@ -376,8 +276,7 @@
     $("year").textContent = new Date().getFullYear();
 
     fetch("https://open.spotify.com/oembed?url=https://open.spotify.com/artist/44vfHD3aycik77FmNlkH56")
-      .then(r => r.json())
-      .then(d => { if (d.thumbnail_url) $("founderImage").src = d.thumbnail_url; })
+      .then(r => r.json()).then(d => { if (d.thumbnail_url) $("founderImage").src = d.thumbnail_url; })
       .catch(() => {});
 
     let currentUser = null;
@@ -385,20 +284,13 @@
     let cachedArtists = [];
     let selectedArtistId = null;
 
-    const ACTION_LABELS = {
-      50: "Stream / engagement",
-      150: "Merch purchase",
-      250: "Drop purchase",
-      300: "Ticket / event",
-      500: "Direct support"
-    };
+    const ACTION_LABELS = { 50:"Stream / engagement", 150:"Merch purchase", 250:"Drop purchase", 300:"Ticket / event", 500:"Direct support" };
 
-    function showStatus(msg, type) {
-      type = type || "good";
+    function showStatus(msg, type="good") {
       const box = $("authStatus");
       box.textContent = msg;
       box.className = "status show " + type;
-      setTimeout(function() { box.className = "status"; }, 6000);
+      setTimeout(() => { box.className = "status"; }, 6000);
     }
 
     function tierFromPoints(pts) {
@@ -409,14 +301,14 @@
     }
 
     function nextTierInfo(pts) {
-      if (pts < 500) return { next: "Silver", target: 500, remaining: 500 - pts, base: 0 };
-      if (pts < 1200) return { next: "Gold", target: 1200, remaining: 1200 - pts, base: 500 };
-      if (pts < 2000) return { next: "Platinum", target: 2000, remaining: 2000 - pts, base: 1200 };
-      return { next: null, target: pts, remaining: 0, base: 2000 };
+      if (pts < 500) return { next:"Silver", target:500, remaining:500-pts, base:0 };
+      if (pts < 1200) return { next:"Gold", target:1200, remaining:1200-pts, base:500 };
+      if (pts < 2000) return { next:"Platinum", target:2000, remaining:2000-pts, base:1200 };
+      return { next:null, target:pts, remaining:0, base:2000 };
     }
 
-    supabase.auth.onAuthStateChange(async function(event, session) {
-      currentUser = session ? session.user : null;
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      currentUser = session?.user ?? null;
       if (currentUser) {
         await ensureProfile();
         renderLoggedIn();
@@ -431,78 +323,52 @@
       const { data: existing } = await supabase.from("profiles").select("*").eq("id", currentUser.id).maybeSingle();
       if (!existing) {
         const meta = currentUser.user_metadata || {};
-        await supabase.from("profiles").insert({
-          id: currentUser.id,
-          email: currentUser.email,
-          name: meta.name || currentUser.email,
-          role: meta.role || "supporter",
-          handle: meta.handle || "",
-          why: meta.why || ""
-        });
+        await supabase.from("profiles").insert({ id:currentUser.id, email:currentUser.email, name:meta.name||currentUser.email, role:meta.role||"supporter", handle:meta.handle||"", why:meta.why||"" });
       }
       const { data } = await supabase.from("profiles").select("*").eq("id", currentUser.id).single();
       currentProfile = data;
     }
 
-    $("joinForm").addEventListener("submit", async function(e) {
+    $("joinForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const name = $("joinName").value.trim();
-      const email = $("joinEmail").value.trim();
-      const role = $("joinRole").value;
-      const handle = $("joinHandle").value.trim();
-      const why = $("joinWhy").value.trim();
+      const name=$("joinName").value.trim(), email=$("joinEmail").value.trim(), role=$("joinRole").value, handle=$("joinHandle").value.trim(), why=$("joinWhy").value.trim();
       if (!role) { showStatus("Please select a role.", "warn"); return; }
       showStatus("Sending your magic link...", "warn");
-      const { error } = await supabase.auth.signInWithOtp({ email: email, options: { data: { name: name, role: role, handle: handle, why: why } } });
+      const { error } = await supabase.auth.signInWithOtp({ email, options:{ data:{ name, role, handle, why } } });
       if (error) { showStatus(error.message, "bad"); return; }
       showStatus("Check your email for your magic link to finish joining.", "good");
       e.target.reset();
     });
 
-    $("loginForm").addEventListener("submit", async function(e) {
+    $("loginForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const email = $("loginEmail").value.trim();
       showStatus("Sending login link...", "warn");
-      const { error } = await supabase.auth.signInWithOtp({ email: email });
+      const { error } = await supabase.auth.signInWithOtp({ email });
       if (error) { showStatus(error.message, "bad"); return; }
       showStatus("Login link sent. Check your email.", "good");
       e.target.reset();
     });
 
-    $("logoutBtn").addEventListener("click", async function() {
-      await supabase.auth.signOut();
-    });
+    $("logoutBtn").addEventListener("click", async () => { await supabase.auth.signOut(); });
 
-    $("supportForm").addEventListener("submit", async function(e) {
+    $("supportForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const artistId = $("supportArtist").value;
-      const points = parseInt($("supportType").value);
+      const artistId=$("supportArtist").value, points=parseInt($("supportType").value);
       if (!artistId) { showStatus("Select an artist to support.", "warn"); return; }
-      const { error } = await supabase.from("support_actions").insert({
-        supporter_id: currentUser.id,
-        artist_id: artistId,
-        points: points,
-        action_type: ACTION_LABELS[points] || "support"
-      });
-      if (error) { showStatus("Error: " + error.message, "bad"); return; }
-      showStatus("+" + points + " points added!", "good");
+      const { error } = await supabase.from("support_actions").insert({ supporter_id:currentUser.id, artist_id:artistId, points, action_type:ACTION_LABELS[points]||"support" });
+      if (error) { showStatus("Error: "+error.message, "bad"); return; }
+      showStatus("+"+points+" points added!", "good");
       await loadSupporterDashboard();
       await loadLeaderboard();
       $("supportArtist").value = "";
     });
 
-    $("rewardForm").addEventListener("submit", async function(e) {
+    $("rewardForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const title = $("rewardTitle").value.trim();
-      const description = $("rewardDescription").value.trim();
-      const tier = $("rewardTier").value;
-      const { error } = await supabase.from("rewards").insert({
-        artist_id: currentUser.id,
-        title: title,
-        description: description,
-        tier_required: tier
-      });
-      if (error) { showStatus("Error: " + error.message, "bad"); return; }
+      const title=$("rewardTitle").value.trim(), description=$("rewardDescription").value.trim(), tier=$("rewardTier").value;
+      const { error } = await supabase.from("rewards").insert({ artist_id:currentUser.id, title, description, tier_required:tier });
+      if (error) { showStatus("Error: "+error.message, "bad"); return; }
       showStatus("Reward created!", "good");
       await loadArtistDashboard();
       e.target.reset();
@@ -510,9 +376,9 @@
 
     function renderLoggedIn() {
       $("logoutBtn").classList.remove("hidden");
-      const name = currentProfile ? currentProfile.name : currentUser.email;
-      const role = currentProfile ? currentProfile.role : "supporter";
-      $("userSummary").innerHTML = "<strong>" + name + "</strong><br><span class='small'>" + currentUser.email + "</span><br><span class='pill' style='margin-top:8px'>" + (role === "artist" ? "Artist" : "Supporter") + "</span>";
+      const name = currentProfile?.name || currentUser.email;
+      const role = currentProfile?.role || "supporter";
+      $("userSummary").innerHTML = "<strong>"+name+"</strong><br><span class='small'>"+currentUser.email+"</span><br><span class='pill' style='margin-top:8px'>"+(role==="artist"?"Artist":"Supporter")+"</span>";
       if (role === "supporter") {
         $("supporterDashboard").classList.remove("hidden");
         $("artistDashboard").classList.add("hidden");
@@ -532,172 +398,113 @@
     }
 
     async function loadSupporterDashboard() {
-      const { data: actions } = await supabase.from("support_actions").select("artist_id,points,action_type,created_at").eq("supporter_id", currentUser.id).order("created_at", { ascending: false });
-      const total = (actions || []).reduce(function(s, a) { return s + a.points; }, 0);
+      const { data: actions } = await supabase.from("support_actions").select("artist_id,points,action_type,created_at").eq("supporter_id", currentUser.id).order("created_at", { ascending:false });
+      const total = (actions||[]).reduce((s,a) => s+a.points, 0);
       const tier = tierFromPoints(total);
       const info = nextTierInfo(total);
       $("myPoints").textContent = total;
       $("myTier").textContent = tier;
-      $("myNextTarget").textContent = info.next ? info.remaining + " to " + info.next : "Platinum";
+      $("myNextTarget").textContent = info.next ? info.remaining+" to "+info.next : "Platinum";
       const range = info.target - info.base;
-      const pct = range > 0 ? Math.min(100, ((total - info.base) / range) * 100) : 100;
-      $("tierProgressBar").style.width = pct + "%";
-      $("tierProgressText").textContent = info.next ? info.remaining + " points until " + info.next : "Top tier reached";
-      const artistIds = [];
-      (actions || []).forEach(function(a) { if (a.artist_id && artistIds.indexOf(a.artist_id) === -1) artistIds.push(a.artist_id); });
+      const pct = range > 0 ? Math.min(100, ((total-info.base)/range)*100) : 100;
+      $("tierProgressBar").style.width = pct+"%";
+      $("tierProgressText").textContent = info.next ? info.remaining+" points until "+info.next : "Top tier reached";
+      const artistIds = [...new Set((actions||[]).map(a=>a.artist_id).filter(Boolean))];
       let artistMap = {};
-      if (artistIds.length > 0) {
-        const { data: ar } = await supabase.from("profiles").select("id,name").in("id", artistIds);
-        (ar || []).forEach(function(x) { artistMap[x.id] = x.name; });
-      }
-      if (!actions || actions.length === 0) {
-        $("myHistory").innerHTML = "<span class='muted'>No support history yet.</span>";
-      } else {
-        $("myHistory").innerHTML = actions.slice(0, 10).map(function(a) {
-          return "<div class='leaderRow'><div class='rank'>+" + a.points + "</div><div><div>" + (a.action_type || "Support") + "</div><div class='small'>" + (artistMap[a.artist_id] || "Artist") + " &middot; " + new Date(a.created_at).toLocaleDateString() + "</div></div></div>";
-        }).join("");
-      }
+      if (artistIds.length > 0) { const { data:a } = await supabase.from("profiles").select("id,name").in("id", artistIds); (a||[]).forEach(x => { artistMap[x.id]=x.name; }); }
+      $("myHistory").innerHTML = (actions||[]).length === 0 ? "<span class='muted'>No support history yet.</span>" : (actions||[]).slice(0,10).map(a => "<div class='leaderRow'><div class='rank'>+"+a.points+"</div><div><div>"+(a.action_type||"Support")+"</div><div class='small'>"+(artistMap[a.artist_id]||"Artist")+" &middot; "+new Date(a.created_at).toLocaleDateString()+"</div></div></div>").join("");
       const { data: allRewards } = await supabase.from("rewards").select("title,description,tier_required,artist_id");
-      const tierOrder = ["Bronze", "Silver", "Gold", "Platinum"];
-      const unlocked = (allRewards || []).filter(function(r) { return tierOrder.indexOf(r.tier_required) <= tierOrder.indexOf(tier); });
-      const rIds = [];
-      unlocked.forEach(function(r) { if (r.artist_id && rIds.indexOf(r.artist_id) === -1) rIds.push(r.artist_id); });
+      const tierOrder = ["Bronze","Silver","Gold","Platinum"];
+      const unlocked = (allRewards||[]).filter(r => tierOrder.indexOf(r.tier_required) <= tierOrder.indexOf(tier));
+      const rIds = [...new Set(unlocked.map(r=>r.artist_id).filter(Boolean))];
       let rMap = {};
-      if (rIds.length > 0) {
-        const { data: ra } = await supabase.from("profiles").select("id,name").in("id", rIds);
-        (ra || []).forEach(function(x) { rMap[x.id] = x.name; });
-      }
-      if (unlocked.length === 0) {
-        $("myUnlockedRewards").innerHTML = "<span class='muted'>Keep supporting to unlock rewards.</span>";
-      } else {
-        $("myUnlockedRewards").innerHTML = unlocked.map(function(r) {
-          return "<div class='card' style='margin-bottom:10px'><span class='tierLabel " + r.tier_required.toLowerCase() + "'>" + r.tier_required + "</span><strong style='display:block;margin-top:8px'>" + r.title + "</strong><p class='small muted'>" + r.description + "</p><p class='small'>" + (rMap[r.artist_id] || "Artist") + "</p></div>";
-        }).join("");
-      }
+      if (rIds.length > 0) { const { data:ra } = await supabase.from("profiles").select("id,name").in("id", rIds); (ra||[]).forEach(x => { rMap[x.id]=x.name; }); }
+      $("myUnlockedRewards").innerHTML = unlocked.length === 0 ? "<span class='muted'>Keep supporting to unlock rewards.</span>" : unlocked.map(r => "<div class='card' style='margin-bottom:10px'><span class='tierLabel "+r.tier_required.toLowerCase()+"'>"+r.tier_required+"</span><strong style='display:block;margin-top:8px'>"+r.title+"</strong><p class='small muted'>"+r.description+"</p><p class='small'>"+(rMap[r.artist_id]||"Artist")+"</p></div>").join("");
       $("supportArtist").innerHTML = "<option value=''>Select artist</option>";
-      cachedArtists.forEach(function(a) {
-        const opt = document.createElement("option");
-        opt.value = a.id;
-        opt.textContent = a.name || "Artist";
-        $("supportArtist").appendChild(opt);
-      });
+      cachedArtists.forEach(a => { const opt=document.createElement("option"); opt.value=a.id; opt.textContent=a.name||"Artist"; $("supportArtist").appendChild(opt); });
     }
 
     async function loadArtistDashboard() {
-      const { data: actions } = await supabase.from("support_actions").select("supporter_id,points,action_type,created_at").eq("artist_id", currentUser.id).order("created_at", { ascending: false });
-      const unique = new Set((actions || []).map(function(a) { return a.supporter_id; })).size;
-      const totalPts = (actions || []).reduce(function(s, a) { return s + a.points; }, 0);
-      const { count } = await supabase.from("rewards").select("*", { count: "exact", head: true }).eq("artist_id", currentUser.id);
+      const { data: actions } = await supabase.from("support_actions").select("supporter_id,points,action_type,created_at").eq("artist_id", currentUser.id).order("created_at", { ascending:false });
+      const unique = new Set((actions||[]).map(a=>a.supporter_id)).size;
+      const totalPts = (actions||[]).reduce((s,a) => s+a.points, 0);
+      const { count } = await supabase.from("rewards").select("*", { count:"exact", head:true }).eq("artist_id", currentUser.id);
       $("artistSupporterCount").textContent = unique;
       $("artistTotalPoints").textContent = totalPts;
-      $("artistRewardCount").textContent = count || 0;
-      const sIds = [];
-      (actions || []).forEach(function(a) { if (a.supporter_id && sIds.indexOf(a.supporter_id) === -1) sIds.push(a.supporter_id); });
+      $("artistRewardCount").textContent = count||0;
+      const sIds = [...new Set((actions||[]).map(a=>a.supporter_id).filter(Boolean))];
       let sMap = {};
-      if (sIds.length > 0) {
-        const { data: s } = await supabase.from("profiles").select("id,name").in("id", sIds);
-        (s || []).forEach(function(x) { sMap[x.id] = x.name; });
-      }
-      if (!actions || actions.length === 0) {
-        $("artistActivity").innerHTML = "<span class='muted'>No supporter activity yet.</span>";
-      } else {
-        $("artistActivity").innerHTML = actions.slice(0, 10).map(function(a) {
-          return "<div class='leaderRow'><div class='rank'>+" + a.points + "</div><div><div>" + (sMap[a.supporter_id] || "Supporter") + "</div><div class='small'>" + (a.action_type || "Support") + " &middot; " + new Date(a.created_at).toLocaleDateString() + "</div></div></div>";
-        }).join("");
-      }
-      const { data: rewards } = await supabase.from("rewards").select("*").eq("artist_id", currentUser.id).order("created_at", { ascending: false });
-      if (!rewards || rewards.length === 0) {
-        $("myRewards").innerHTML = "<span class='muted'>No rewards yet. Create one above.</span>";
-      } else {
-        $("myRewards").innerHTML = rewards.map(function(r) {
-          return "<div class='card' style='margin-bottom:10px'><span class='tierLabel " + r.tier_required.toLowerCase() + "'>" + r.tier_required + "</span><strong style='display:block;margin-top:8px'>" + r.title + "</strong><p class='small muted'>" + r.description + "</p></div>";
-        }).join("");
-      }
+      if (sIds.length > 0) { const { data:s } = await supabase.from("profiles").select("id,name").in("id", sIds); (s||[]).forEach(x => { sMap[x.id]=x.name; }); }
+      $("artistActivity").innerHTML = (actions||[]).length === 0 ? "<span class='muted'>No supporter activity yet.</span>" : (actions||[]).slice(0,10).map(a => "<div class='leaderRow'><div class='rank'>+"+a.points+"</div><div><div>"+(sMap[a.supporter_id]||"Supporter")+"</div><div class='small'>"+(a.action_type||"Support")+" &middot; "+new Date(a.created_at).toLocaleDateString()+"</div></div></div>").join("");
+      const { data: rewards } = await supabase.from("rewards").select("*").eq("artist_id", currentUser.id).order("created_at", { ascending:false });
+      $("myRewards").innerHTML = (rewards||[]).length === 0 ? "<span class='muted'>No rewards yet. Create one above.</span>" : (rewards||[]).map(r => "<div class='card' style='margin-bottom:10px'><span class='tierLabel "+r.tier_required.toLowerCase()+"'>"+r.tier_required+"</span><strong style='display:block;margin-top:8px'>"+r.title+"</strong><p class='small muted'>"+r.description+"</p></div>").join("");
     }
 
     async function loadArtistDirectory() {
-      const { data: artists } = await supabase.from("profiles").select("id,name,handle,spotify_url").eq("role", "artist").order("name");
+      const { data: artists } = await supabase.from("profiles").select("id,name,handle,spotify_url").eq("role","artist").order("name");
       cachedArtists = artists || [];
       const { data: pointData } = await supabase.from("support_actions").select("artist_id,points");
       const ptMap = {};
-      (pointData || []).forEach(function(a) { ptMap[a.artist_id] = (ptMap[a.artist_id] || 0) + a.points; });
+      (pointData||[]).forEach(a => { ptMap[a.artist_id]=(ptMap[a.artist_id]||0)+a.points; });
       const dir = $("artistDirectory");
-      if (cachedArtists.length === 0) {
-        dir.innerHTML = "<div class='card muted'>No artists yet.</div>";
-        return;
-      }
-      dir.innerHTML = cachedArtists.map(function(a) {
-        return "<div class='card clickable" + (selectedArtistId === a.id ? " active" : "") + "' data-id='" + a.id + "'>" +
-          (a.spotify_url ? "<img class='artistPhoto' data-spotify='" + a.spotify_url + "' alt='" + (a.name || "Artist") + "' />" : "") +
-          "<h3>" + (a.name || "Artist") + "</h3>" +
-          "<p class='small'>" + (a.handle ? "@" + a.handle : "") + "</p>" +
-          "<p class='small'>" + (ptMap[a.id] || 0) + " community points</p>" +
-          (a.spotify_url ? "<a class='spotifyBtn' href='" + a.spotify_url + "' target='_blank' rel='noreferrer' onclick='event.stopPropagation()'>&#9654; Spotify</a>" : "") +
-          "</div>";
-      }).join("");
-      dir.querySelectorAll("[data-spotify]").forEach(function(img) {
-        fetch("https://open.spotify.com/oembed?url=" + encodeURIComponent(img.dataset.spotify))
-          .then(function(r) { return r.json(); })
-          .then(function(d) { if (d.thumbnail_url) img.src = d.thumbnail_url; })
-          .catch(function() {});
+      if (cachedArtists.length === 0) { dir.innerHTML = "<div class='card muted'>No artists yet.</div>"; return; }
+      dir.innerHTML = cachedArtists.map(a =>
+        "<div class='card clickable"+(selectedArtistId===a.id?" active":"")+"' data-id='"+a.id+"'>" +
+        (a.spotify_url ? "<img class='artistPhoto' data-spotify='"+a.spotify_url+"' alt='"+(a.name||"Artist")+"' />" : "") +
+        "<h3>"+(a.name||"Artist")+"</h3>" +
+        "<p class='small'>"+(a.handle?"@"+a.handle:"")+"</p>" +
+        "<p class='small'>"+(ptMap[a.id]||0)+" community points</p>" +
+        (a.spotify_url ? "<a class='spotifyBtn' href='"+a.spotify_url+"' target='_blank' rel='noreferrer' data-stream-id='"+a.id+"' onclick='event.stopPropagation()'>&#9654; Spotify</a>" : "") +
+        "</div>"
+      ).join("");
+      dir.querySelectorAll("[data-spotify]").forEach(async img => {
+        try { const r=await fetch("https://open.spotify.com/oembed?url="+encodeURIComponent(img.dataset.spotify)); const d=await r.json(); if(d.thumbnail_url) img.src=d.thumbnail_url; } catch(e) {}
       });
-      dir.querySelectorAll("[data-id]").forEach(function(card) {
-        card.addEventListener("click", function() {
-          const artist = cachedArtists.find(function(a) { return a.id === card.dataset.id; });
-          if (artist) selectArtist(artist);
+      dir.querySelectorAll("[data-id]").forEach(card => {
+        card.addEventListener("click", () => { const artist=cachedArtists.find(a=>a.id===card.dataset.id); if(artist) selectArtist(artist); });
+      });
+      dir.querySelectorAll("[data-stream-id]").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          if (currentUser && currentProfile?.role === "supporter") {
+            const artistId = btn.dataset.streamId;
+            const { error } = await supabase.from("support_actions").insert({ supporter_id:currentUser.id, artist_id:artistId, points:10, action_type:"Stream / engagement" });
+            if (!error) { showStatus("+10 points for streaming!", "good"); await loadSupporterDashboard(); await loadLeaderboard(); }
+          }
         });
       });
     }
 
     async function selectArtist(artist) {
       selectedArtistId = artist.id;
-      $("selectedArtistName").textContent = artist.name || "Artist";
-      $("selectedArtistMeta").textContent = artist.handle ? "@" + artist.handle : "EarlySignal artist";
+      $("selectedArtistName").textContent = artist.name||"Artist";
+      $("selectedArtistMeta").textContent = artist.handle?"@"+artist.handle:"EarlySignal artist";
       const { data: actions } = await supabase.from("support_actions").select("supporter_id,points").eq("artist_id", artist.id);
-      const total = (actions || []).reduce(function(s, a) { return s + a.points; }, 0);
-      const unique = new Set((actions || []).map(function(a) { return a.supporter_id; })).size;
+      const total=(actions||[]).reduce((s,a)=>s+a.points,0);
+      const unique=new Set((actions||[]).map(a=>a.supporter_id)).size;
       $("selectedArtistStats").innerHTML =
-        "<div class='pill'>Supporters: <strong>" + unique + "</strong></div>" +
-        "<div class='pill'>Community points: <strong>" + total + "</strong></div>" +
-        (artist.spotify_url ? "<div style='margin-top:14px'><a class='btn secondary' href='" + artist.spotify_url + "' target='_blank' rel='noreferrer' style='font-size:13px'>&#9654; Listen on Spotify</a></div>" : "");
+        "<div class='pill'>Supporters: <strong>"+unique+"</strong></div>" +
+        "<div class='pill'>Community points: <strong>"+total+"</strong></div>" +
+        (artist.spotify_url ? "<div style='margin-top:14px'><a class='btn secondary' href='"+artist.spotify_url+"' target='_blank' rel='noreferrer' style='font-size:13px'>&#9654; Listen on Spotify</a></div>" : "");
       const { data: rewards } = await supabase.from("rewards").select("*").eq("artist_id", artist.id);
-      if (!rewards || rewards.length === 0) {
-        $("selectedArtistRewards").innerHTML = "<span class='muted'>No rewards yet.</span>";
-      } else {
-        $("selectedArtistRewards").innerHTML = rewards.map(function(r) {
-          return "<div class='card' style='margin-bottom:10px'><span class='tierLabel " + r.tier_required.toLowerCase() + "'>" + r.tier_required + "</span><strong style='display:block;margin-top:8px'>" + r.title + "</strong><p class='small muted'>" + r.description + "</p></div>";
-        }).join("");
-      }
+      $("selectedArtistRewards").innerHTML = (rewards||[]).length===0 ? "<span class='muted'>No rewards yet.</span>" : (rewards||[]).map(r => "<div class='card' style='margin-bottom:10px'><span class='tierLabel "+r.tier_required.toLowerCase()+"'>"+r.tier_required+"</span><strong style='display:block;margin-top:8px'>"+r.title+"</strong><p class='small muted'>"+r.description+"</p></div>").join("");
       loadArtistDirectory();
     }
 
     async function loadLeaderboard() {
       const { data: actions } = await supabase.from("support_actions").select("supporter_id,points");
       const byId = {};
-      (actions || []).forEach(function(a) { byId[a.supporter_id] = (byId[a.supporter_id] || 0) + a.points; });
+      (actions||[]).forEach(a => { byId[a.supporter_id]=(byId[a.supporter_id]||0)+a.points; });
       const ids = Object.keys(byId);
-      if (ids.length === 0) {
-        $("leaderboardRows").innerHTML = "<span class='muted'>No supporters yet. Be the first.</span>";
-        return;
-      }
+      if (ids.length === 0) { $("leaderboardRows").innerHTML = "<span class='muted'>No supporters yet. Be the first.</span>"; return; }
       const { data: profiles } = await supabase.from("profiles").select("id,name").in("id", ids);
       const nameMap = {};
-      (profiles || []).forEach(function(p) { nameMap[p.id] = p.name; });
-      const sorted = Object.entries(byId).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 10);
-      $("leaderboardRows").innerHTML = sorted.map(function(entry, i) {
-        return "<div class='leaderRow'><div class='rank'>" + (i + 1) + "</div><div><div>" + (nameMap[entry[0]] || "Supporter") + "</div><div class='small'>" + tierFromPoints(entry[1]) + "</div></div><div class='small'>" + entry[1] + " pts</div></div>";
-      }).join("");
+      (profiles||[]).forEach(p => { nameMap[p.id]=p.name; });
+      const sorted = Object.entries(byId).sort((a,b)=>b[1]-a[1]).slice(0,10);
+      $("leaderboardRows").innerHTML = sorted.map(([id,pts],i) => "<div class='leaderRow'><div class='rank'>"+(i+1)+"</div><div><div>"+(nameMap[id]||"Supporter")+"</div><div class='small'>"+tierFromPoints(pts)+"</div></div><div class='small'>"+pts+" pts</div></div>").join("");
     }
 
-    async function loadPublicData() {
-      await loadArtistDirectory();
-      await loadLeaderboard();
-    }
-
-    async function loadAll() {
-      await loadArtistDirectory();
-      await loadLeaderboard();
-    }
+    async function loadPublicData() { await loadArtistDirectory(); await loadLeaderboard(); }
+    async function loadAll() { await loadArtistDirectory(); await loadLeaderboard(); }
 
     loadPublicData();
   </script>
