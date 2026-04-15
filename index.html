@@ -270,7 +270,9 @@
     import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
     const supabaseUrl = "https://lypoiwjjqbqwooclcqrm.supabase.co";
     const supabaseKey = "sb_publishable_awRJTr9ZFL_-HOeBeUPB_A_5Q6PW9bh";
-    const supabase = createClient(supabaseUrl, supabaseKey);
+   const supabase = createClient(supabaseUrl, supabaseKey, {
+  auth: { flowType: "implicit" }
+});
 
     const $ = (id) => document.getElementById(id);
     $("year").textContent = new Date().getFullYear();
