@@ -270,9 +270,9 @@
     import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
     const supabaseUrl = "https://lypoiwjjqbqwooclcqrm.supabase.co";
     const supabaseKey = "sb_publishable_awRJTr9ZFL_-HOeBeUPB_A_5Q6PW9bh";
-   const supabase = createClient(supabaseUrl, supabaseKey, {
-  auth: { flowType: "implicit" }
-});
+    const supabase = createClient(supabaseUrl, supabaseKey, {
+      auth: { flowType: "implicit" }
+    });
 
     const $ = (id) => document.getElementById(id);
     $("year").textContent = new Date().getFullYear();
@@ -310,7 +310,7 @@
     }
 
     supabase.auth.onAuthStateChange(async (event, session) => {
-      currentUser = session?.user ?? null;
+      currentUser = session ? session.user : null;
       if (currentUser) {
         await ensureProfile();
         renderLoggedIn();
@@ -322,13 +322,15 @@
     });
 
     async function ensureProfile() {
-      const { data: existing } = await supabase.from("profiles").select("*").eq("id", currentUser.id).maybeSingle();
-      if (!existing) {
-        const meta = currentUser.user_metadata || {};
-        await supabase.from("profiles").insert({ id:currentUser.id, email:currentUser.email, name:meta.name||currentUser.email, role:meta.role||"supporter", handle:meta.handle||"", why:meta.why||"" });
-      }
-      const { data } = await supabase.from("profiles").select("*").eq("id", currentUser.id).single();
-      currentProfile = data;
+      try {
+        const { data: existing } = await supabase.from("profiles").select("*").eq("id", currentUser.id).maybeSingle();
+        if (!existing) {
+          const meta = currentUser.user_metadata || {};
+          await supabase.from("profiles").insert({ id:currentUser.id, email:currentUser.email, name:meta.name||currentUser.email, role:meta.role||"supporter", handle:meta.handle||"", why:meta.why||"" });
+        }
+        const { data } = await supabase.from("profiles").select("*").eq("id", currentUser.id).single();
+        currentProfile = data;
+      } catch(e) { console.error("ensureProfile error", e); }
     }
 
     $("joinForm").addEventListener("submit", async (e) => {
@@ -378,8 +380,8 @@
 
     function renderLoggedIn() {
       $("logoutBtn").classList.remove("hidden");
-      const name = currentProfile?.name || currentUser.email;
-      const role = currentProfile?.role || "supporter";
+      const name = currentProfile ? currentProfile.name : currentUser.email;
+      const role = currentProfile ? currentProfile.role : "supporter";
       $("userSummary").innerHTML = "<strong>"+name+"</strong><br><span class='small'>"+currentUser.email+"</span><br><span class='pill' style='margin-top:8px'>"+(role==="artist"?"Artist":"Supporter")+"</span>";
       if (role === "supporter") {
         $("supporterDashboard").classList.remove("hidden");
@@ -443,37 +445,40 @@
     }
 
     async function loadArtistDirectory() {
-      const { data: artists } = await supabase.from("profiles").select("id,name,handle,spotify_url").eq("role","artist").order("name");
-      cachedArtists = artists || [];
-      const { data: pointData } = await supabase.from("support_actions").select("artist_id,points");
-      const ptMap = {};
-      (pointData||[]).forEach(a => { ptMap[a.artist_id]=(ptMap[a.artist_id]||0)+a.points; });
-      const dir = $("artistDirectory");
-      if (cachedArtists.length === 0) { dir.innerHTML = "<div class='card muted'>No artists yet.</div>"; return; }
-      dir.innerHTML = cachedArtists.map(a =>
-        "<div class='card clickable"+(selectedArtistId===a.id?" active":"")+"' data-id='"+a.id+"'>" +
-        (a.spotify_url ? "<img class='artistPhoto' data-spotify='"+a.spotify_url+"' alt='"+(a.name||"Artist")+"' />" : "") +
-        "<h3>"+(a.name||"Artist")+"</h3>" +
-        "<p class='small'>"+(a.handle?"@"+a.handle:"")+"</p>" +
-        "<p class='small'>"+(ptMap[a.id]||0)+" community points</p>" +
-        (a.spotify_url ? "<a class='spotifyBtn' href='"+a.spotify_url+"' target='_blank' rel='noreferrer' data-stream-id='"+a.id+"' onclick='event.stopPropagation()'>&#9654; Spotify</a>" : "") +
-        "</div>"
-      ).join("");
-      dir.querySelectorAll("[data-spotify]").forEach(async img => {
-        try { const r=await fetch("https://open.spotify.com/oembed?url="+encodeURIComponent(img.dataset.spotify)); const d=await r.json(); if(d.thumbnail_url) img.src=d.thumbnail_url; } catch(e) {}
-      });
-      dir.querySelectorAll("[data-id]").forEach(card => {
-        card.addEventListener("click", () => { const artist=cachedArtists.find(a=>a.id===card.dataset.id); if(artist) selectArtist(artist); });
-      });
-      dir.querySelectorAll("[data-stream-id]").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          if (currentUser && currentProfile?.role === "supporter") {
-            const artistId = btn.dataset.streamId;
-            const { error } = await supabase.from("support_actions").insert({ supporter_id:currentUser.id, artist_id:artistId, points:10, action_type:"Stream / engagement" });
-            if (!error) { showStatus("+10 points for streaming!", "good"); await loadSupporterDashboard(); await loadLeaderboard(); }
-          }
+      try {
+        const { data: artists, error } = await supabase.from("profiles").select("id,name,handle,spotify_url").eq("role","artist").order("name");
+        if (error) throw error;
+        cachedArtists = artists || [];
+        const { data: pointData } = await supabase.from("support_actions").select("artist_id,points");
+        const ptMap = {};
+        (pointData||[]).forEach(a => { ptMap[a.artist_id]=(ptMap[a.artist_id]||0)+a.points; });
+        const dir = $("artistDirectory");
+        if (cachedArtists.length === 0) { dir.innerHTML = "<div class='card muted'>No artists yet.</div>"; return; }
+        dir.innerHTML = cachedArtists.map(a =>
+          "<div class='card clickable"+(selectedArtistId===a.id?" active":"")+"' data-id='"+a.id+"'>" +
+          (a.spotify_url ? "<img class='artistPhoto' data-spotify='"+a.spotify_url+"' alt='"+(a.name||"Artist")+"' />" : "") +
+          "<h3>"+(a.name||"Artist")+"</h3>" +
+          "<p class='small'>"+(a.handle?"@"+a.handle:"")+"</p>" +
+          "<p class='small'>"+(ptMap[a.id]||0)+" community points</p>" +
+          (a.spotify_url ? "<a class='spotifyBtn' href='"+a.spotify_url+"' target='_blank' rel='noreferrer' data-stream-id='"+a.id+"' onclick='event.stopPropagation()'>&#9654; Spotify</a>" : "") +
+          "</div>"
+        ).join("");
+        dir.querySelectorAll("[data-spotify]").forEach(async img => {
+          try { const r=await fetch("https://open.spotify.com/oembed?url="+encodeURIComponent(img.dataset.spotify)); const d=await r.json(); if(d.thumbnail_url) img.src=d.thumbnail_url; } catch(e) {}
         });
-      });
+        dir.querySelectorAll("[data-id]").forEach(card => {
+          card.addEventListener("click", () => { const artist=cachedArtists.find(a=>a.id===card.dataset.id); if(artist) selectArtist(artist); });
+        });
+        dir.querySelectorAll("[data-stream-id]").forEach(btn => {
+          btn.addEventListener("click", async () => {
+            if (currentUser && currentProfile && currentProfile.role === "supporter") {
+              const artistId = btn.dataset.streamId;
+              const { error } = await supabase.from("support_actions").insert({ supporter_id:currentUser.id, artist_id:artistId, points:10, action_type:"Stream / engagement" });
+              if (!error) { showStatus("+10 points for streaming!", "good"); await loadSupporterDashboard(); await loadLeaderboard(); }
+            }
+          });
+        });
+      } catch(e) { $("artistDirectory").innerHTML = "<div class='card muted'>Could not load artists. Check your connection.</div>"; console.error("loadArtistDirectory error", e); }
     }
 
     async function selectArtist(artist) {
